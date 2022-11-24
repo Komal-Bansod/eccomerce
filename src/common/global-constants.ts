@@ -155,6 +155,14 @@ export const INVENTORY = {
   DELETED_SUCCESSFULLY: 'Inventory deleted successfully',
 
 };
+export const PLAYLISTS= {
+  CREATED: 'Playlists created successfully.',
+  UPDATED: 'Playlists updated successfully.',
+  NOT_FOUND: 'Playlists not found.',
+  FOUND: 'Playlists found successfully.',
+  DELETED_SUCCESSFULLY: 'Playlists deleted successfully',
+
+};
 
 export const NOTIFICATION = {
   ALREADY_EXIST: 'Notification already exist',

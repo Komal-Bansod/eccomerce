@@ -16,9 +16,6 @@ export const categorySingleSchema = Joi.object().keys({
   id: Joi.string().required(),
 });
 
-// export const userListSchema = Joi.object().keys({
-//   search: Joi.string().optional(),
-// });
 
 export const categoryDeleteSchema = Joi.object().keys({
   deleteId: Joi.string().required(),
