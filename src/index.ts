@@ -9,7 +9,7 @@ import { StatusCodes } from 'http-status-codes';
 // import { Server } from 'socket.io';
 import logger from './lib/logger';
 import { responseValidation } from './lib';
-import { loginHandler ,updatePassword, Token ,forgotPassword } from './routes/auth';
+import { loginHandler, updatePassword, forgotPassword, verifyToken } from './routes/auth';
 import RoleRoute from './routes/roles';
 import AdminRoute from './routes/admin';
 import UserRoute from './routes/user';
@@ -19,7 +19,9 @@ import swaggerUi from 'swagger-ui-express';
 import { features } from 'process';
 import CategoryRoute from './routes/category'
 import NotificationRoute from './routes/notification'
-
+import ProductRoute from './routes/product'
+import UploadRoute from './routes/upload'
+import InventoryRoute from './routes/inventory'
 dotenv.config();
 
 const app = express();
@@ -78,7 +80,7 @@ const options = {
     servers: [
       {
         url: 'http://localhost:5000',
-        description: 'Ecommerce API Documentation',
+        description: 'Luminaree API Documentation',
       },
     ],
     components: {
@@ -111,7 +113,7 @@ app.use(
 
 const health = (req: Request, res: Response) => {
   res.json({
-    message: 'Roulete server is working',
+    message: 'E-commerce server is working',
     env: process.env.NODE_ENV,
     headers: req.headers,
   });
@@ -228,7 +230,7 @@ app.get('/api/health', health);
  *     security: {}
  *     responses:
  *       200:
- *         description: The login was successfully response
+ *         description: The login  successfully response
  *         content:
  *           application/json:
  *             schema:
@@ -236,7 +238,7 @@ app.get('/api/health', health);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- app.post('/api/login', loginHandler);
+app.post('/api/login', loginHandler);
 /**
  * @swagger
  * components:
@@ -245,17 +247,12 @@ app.get('/api/health', health);
  *       type: object
  *       required:
  *         - email
- *         - userId
  *       properties:
  *         email:
  *           type: string
  *           description: email
- *         userId:
- *           type: string
- *           description: userId
  *       example:
  *         email: string
- *         userId: string
  *
  */
 
@@ -265,7 +262,6 @@ app.get('/api/health', health);
  *    ForgotPasswordInResponse:
  *     example:
  *       data:
- *         userId: string
  *         email: string
  *       status_code: 200
  *       status_message: string
@@ -277,7 +273,7 @@ app.get('/api/health', health);
  * @swagger
  * /api/forgot-password:
  *   post:
- *     summary: forgotPassword
+ *     summary: Forgot password
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -288,7 +284,7 @@ app.get('/api/health', health);
  *     security: {}
  *     responses:
  *       200:
- *         description: The  ForgotPassword was successfully response
+ *         description: The  forgot-password  successfully response
  *         content:
  *           application/json:
  *             schema:
@@ -306,7 +302,7 @@ app.post('/api/forgot-password', forgotPassword)
  *   tokenVerifyInResponse:
  *     example:
  *       data:
- *         verifyToken: string
+ *         token: string
  *       status_code: 200
  *       status_message: string
  *       response_error: false
@@ -320,20 +316,20 @@ app.post('/api/forgot-password', forgotPassword)
  *     tokenVerify:
  *       type: object
  *       required:
- *         - verifyToken
+ *         - token
  *       properties:
- *         verifyToken:
+ *         token:
  *           type: string
  *           description: verifyToken
  *       example:
- *         verifyToken: string
+ *         token: string
  *
  */
 /**
  * @swagger
- * /api/verifyToken:
+ * /api/verify-token:
  *   post:
- *     summary: api verifyToken
+ *     summary: Verify token for forgot password
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -344,7 +340,7 @@ app.post('/api/forgot-password', forgotPassword)
  *     security: {}
  *     responses:
  *       200:
- *         description: The token was successfully response
+ *         description: Token verified successfully
  *         content:
  *           application/json:
  *             schema:
@@ -352,7 +348,7 @@ app.post('/api/forgot-password', forgotPassword)
  *       500:
  *         description: Something went wrong, please try again later.
  */
-app.post('/api/verifyToken',Token)
+app.post('/api/verify-token', verifyToken)
 
 
 /**
@@ -392,9 +388,9 @@ app.post('/api/verifyToken',Token)
  */
 /**
  * @swagger
- * /api/updatePassword:
+ * /api/update-password:
  *   post:
- *     summary: api updatePassword
+ *     summary: Update password for user
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -405,7 +401,7 @@ app.post('/api/verifyToken',Token)
  *     security: {}
  *     responses:
  *       200:
- *         description: password reset 
+ *         description: Password reset 
  *         content:
  *           application/json:
  *             schema:
@@ -414,12 +410,15 @@ app.post('/api/verifyToken',Token)
  *         description: Something went wrong, please try again later.
  */
 
-app.post('/api/updatePassword', updatePassword)
+app.post('/api/update-password', updatePassword)
 app.use('/api/role', RoleRoute);
 app.use('/api/admin', AdminRoute);
 app.use('/api/user', UserRoute);
 app.use('/api/category', CategoryRoute);
 app.use('/api/notification', NotificationRoute)
+app.use('/api/product', ProductRoute)
+app.use('/api/upload', UploadRoute)
+app.use('/api/inventory', InventoryRoute)
 app.use((req: Request, res: Response) => {
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -428,7 +427,7 @@ app.use((req: Request, res: Response) => {
 
 app.use((error: any, req: Request, res: Response) => {
   // , next: NextFunction
- 
+
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(
     responseValidation(
       StatusCodes.INTERNAL_SERVER_ERROR,

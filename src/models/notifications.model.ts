@@ -28,6 +28,6 @@ const NotificationsSchema: Schema = new Schema({
   deleted_at: { type: String },
 });
 
-const Notifications = mongoose.model<INotificationsModel>('Notifications', NotificationsSchema);
+const Notifications = mongoose.model<INotificationsModel>('notifications', NotificationsSchema);
 
 export default Notifications;

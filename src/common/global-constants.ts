@@ -11,25 +11,16 @@ export const LOGIN = {
   NOT_ACTIVE_USER: 'Account with given email-id is not active yet.',
 };
 export const NOTIFICATION_MESSAGE = {
-  CREATE_USER :'New User registered in E-commerce Platform.',
- USER_LOGIN : 'User login in E-commerce',
- RESET_PASSWORD: 'User requested for reset password.',
- FORGOT_PASSWORD : 'User requested for forgot password.',
- UPDATE_PASSWORD : 'User updated password'
- 
+  CREATE_USER: 'New User registered in E-commerce Platform.',
+  USER_LOGIN: 'User login in E-commerce',
+  RESET_PASSWORD: 'User requested for reset password.',
+  FORGOT_PASSWORD: 'User requested for forgot password.',
+  UPDATE_PASSWORD: 'User updated password'
+
 };
-
-
-
-
-
-
-
-
-
 export const REGISTER = {
-  PASSWORD_UPDATE: 'password update successfully',
-  PASSWORD_CHANGE: 'password change successfully',
+  PASSWORD_UPDATE: 'Password update successfully',
+  PASSWORD_CHANGE: 'Password change successfully',
   SUCCESS: 'Registration success, welcome!',
   USER_EXIST: 'Account already exists with the given email, please provide another email.',
   USER_NOT_REGISTERED: 'No user registered with these credentials found.',
@@ -51,6 +42,14 @@ export const RESET_PASSWORD = {
   EMAIL_SENT_SUCCESS: 'Password reset link sent, please check your inbox.',
 };
 
+
+export const FORGOT_PASSWORD = {
+  INVALID_EMAIL: 'Requested email not found.', 
+  EMAIL_SENT_SUCCESS: 'Forgot password link sent, please check your inbox.',
+  VERIFY_TOKEN_FAIL: 'Token Expired',
+};
+
+
 export const ACTIONS = {
   FETCHED: 'Fetched successfully.',
   UPDATED: 'Updated successfully.',
@@ -66,8 +65,8 @@ export const ERROR = {
   UNAUTHORIZED_ROLE_ERROR: 'Unauthorized access. You are not authorized to perform this action.',
   TOKEN_EXPIRED_ERROR: 'Unauthorized access. token expired.',
   PROVIDE_TOKEN_ERROR: 'Unauthorized access. Please provide valid token.',
-  TOKEN_MATCH : 'received token and forgot password token match',
-  TOKEN_Invalid : 'invalid token or token expire'
+  TOKEN_MATCH: 'Received token and forgot password token match',
+  TOKEN_INVALID: 'Invalid token or token expire'
 };
 
 export const CHANGE_PASSWORD = {
@@ -96,10 +95,10 @@ export const Users = {
   CREATED: 'User has been added successfully.',
   DELETED: 'User has been removed successfully.',
   NOT_FOUND: 'Requested User not found.',
-  NO_PERMISSION: 'user dont have permission to delete her self',
-  NO_PERMISSION_CREATE: 'user dont have permission to create category',
-  NO_PERMISSION_UPDATE: 'user dont have permission to update category',
-  NO_PERMISSION_DELETE: 'user dont have permission to delete category',
+  NO_PERMISSION: 'User dont have permission to delete her self',
+  NO_PERMISSION_CREATE: 'User dont have permission to create category',
+  NO_PERMISSION_UPDATE: 'User dont have permission to update category',
+  NO_PERMISSION_DELETE: 'User dont have permission to delete category',
   EMAIL_ALREADY_EXIST: 'Email already exist in the system',
   ALREADY_EXIST: 'Users email already exists, please rename this User emailId',
   ALREADY_EXIST_SYS: 'User already exists in the system, please rename this User',
@@ -130,78 +129,51 @@ export const ROLE = {
 };
 
 export const CATEGORY = {
-  ALREADY_EXIST: 'category already exist',
-  CREATED: 'category created successfully.',
-  UPDATED: 'category updated successfully.',
-  NOT_FOUND: 'category not found.',
+  ALREADY_EXIST: 'Category already exist',
+  CREATED: 'Category created successfully.',
+  UPDATED: 'Category updated successfully.',
+  NOT_FOUND: 'Category not found.',
   EMAIl_ALREADY_EXIST: 'Email already exist in the system',
-  FOUND: 'category found successfully.',
-  DELETED_SUCCESSFULLY: 'category deleted successfully',
+  FOUND: 'Category found successfully.',
+  DELETED_SUCCESSFULLY: 'Category deleted successfully',
+};
+
+export const PRODUCT = {
+  ALREADY_EXIST: 'Sku already exist',
+  CREATED: 'Product created successfully.',
+  UPDATED: 'Product updated successfully.',
+  NOT_FOUND: 'Product not found.',
+  FOUND: 'Product found successfully.',
+  DELETED_SUCCESSFULLY: 'Product deleted successfully',
+  UPLOAD: 'Product image uploaded successfully'
+};
+export const INVENTORY = {
+  CREATED: 'Inventory created successfully.',
+  UPDATED: 'Inventory updated successfully.',
+  NOT_FOUND: 'Inventory not found.',
+  FOUND: 'Inventory found successfully.',
+  DELETED_SUCCESSFULLY: 'Inventory deleted successfully',
+
 };
 
 export const NOTIFICATION = {
   ALREADY_EXIST: 'Notification already exist',
   CREATED: 'Notification  created successfully.',
   NOT_FOUND: 'Notification  not found.',
- FOUND: 'Notification found successfully.',
+  FOUND: 'Notification found successfully.',
 
-}; 
+};
 export const userType = {
   admin: 'ADMIN',
   operator: 'OPERATOR',
   user: 'USER',
 };
 
-export const GAME = {
-  NAME_ALREADY_EXIST: 'Game with given name already exist',
-  CREATED: 'Game created successfully',
-  UPDATE: 'Game data updated successfully',
-  NOT_FOUND: 'Game not found',
-  FOUND: 'Game Found successfully.',
-  DELETED: 'Game deleted successfully.',
-  TIMER:"Roulette timer.",
-  NO_MORE_BETS:"No more best please."
-};
-
-export const MARKET = {
-  CREATED: 'Market created successfully',
-  NAME_ALREADY_EXIST: 'Market with given name already exist',
-  UPDATE: 'Market data updated successfully',
-  DELETED: 'Market deleted successfully',
-  NOT_FOUND: 'Market not found',
-  FOUND: 'Market Found successfully.',
-  RUNNERSTATUS: 'Market runner status updated successfully',
-};
-
-export const RUNNER = {
-  NAME_ALREADY_EXIST: 'Runner with this name already exist.',
-  CREATED: 'Runner created successfully',
-  UPDATE: 'Runner data updated successfully',
-  NOT_DELETED: 'Runner not deleted successfully',
-  DELETED: 'Runner deleted successfully',
-  FOUND: 'Runner foudn.',
-};
-
-export const CURRENCY = {
-  NAME_ALREADY_EXIST: 'Currency already exist',
-  CREATED: 'Currency created successfully',
-  FOUND: 'Currency data found.',
-};
-
-export const PACKAGE = {
-  CREATED: 'Package created successfully',
-  NAME_ALREADY_EXIST: 'Package with given name already exist',
-  UPDATE: 'Package data updated successfully',
-  DELETED: 'Package deleted successfully',
-  NOT_FOUND: 'Package not found',
-  FOUND: 'Package Found successfully.',
-};
-
 export interface ITokenData {
   email: string;
-  mobile: string | undefined;
-  first_name: string;
-  last_name: string;
+  mobile?: string | undefined;
+  first_name?: string;
+  last_name?: string;
   role?: string;
   roleId?: string;
   operatorId?: string;
@@ -213,17 +185,6 @@ export interface TokenData {
   userId: string;
 }
 
-export const BET = {
-  CREATED: 'Bet created successfully',
-  NOT_CREATED: 'Bet not created',
-  NOT_UPDATED: 'Bet not updated',
-  UPDATED: 'Bet updated successfully',
-  FOUND: 'Bet found successfully',
-  NOT_FOUND: 'Bet not found',
-  NOT_DELETED: 'Bet deleted successfully',
-  DELETED: 'Bet not deleted successfully',
-};
-
 export const STATUS = {
   ACTIVE: 'Active',
   DEACTIVATE: 'Deactivate',
@@ -232,32 +193,4 @@ export const STATUS = {
 export const TRANSACTION_TYPE = {
   CREDIT: 'credit',
   DEBIT: 'debit',
-};
-
-export const ROULETTE_ROOM_STATUS = {
-  LIVE: 'Live',
-  COMPLETED: 'Completed',
-  NOT_COMPLETED: 'Not-Completed',
-};
-
-export const JOIN_EVENT = {
-  JOIN_TABLE_SUCCESS: 'Great! Join table successfully.',
-  USER_BET_PLAY: 'The bet has been placed successfully',
-  USER_WINNER_LIST: "These are the winners' lists",
-  NEW_USER_JOIN: 'New user join',
-  WIN_NUMBER: 'Win number found.',
-  BALANCE_FOUND: 'Balance found.',
-  USER_ALREADY_EXIST_ROOM: 'You already exist in the room',
-  UNDO_ALL_BET:'The all bet have been successfully undo'
-};
-
-export const BET_STATUS = {
-  SETTLE: 'settle',
-  UNSETTLE: 'unsettle',
-  PENDING: 'pending',
-};
-
-export const ROULETTE_ERROR = {
-  BET_ERROR: 'Please place the bet',
-  BALANCE_GREATER_ERROR: 'This bet requires a balance greater than your current balance',
 };

@@ -40,6 +40,6 @@ const CategorySchema: Schema = new Schema({
   deleted_at: { type: String },
 });
 
-const Category = mongoose.model<ICategoryModel>('Category', CategorySchema);
+const Category = mongoose.model<ICategoryModel>('categories', CategorySchema);
 
 export default Category;

@@ -34,6 +34,6 @@ const AuditSchema: Schema = new Schema({
   deleted_at: { type: String },
 });
 
-const Audit = mongoose.model<IAuditModel>('Audit', AuditSchema);
+const Audit = mongoose.model<IAuditModel>('audits', AuditSchema);
 
 export default Audit;

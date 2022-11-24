@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+import { nanoid, customAlphabet } from 'nanoid';
 import * as bcrypt from 'bcryptjs';
 import Role from '../models/role.model';
 import dayjs from 'dayjs';
@@ -38,9 +38,18 @@ export const comparePassword = async (password, hash) => {
 };
 
 export const generatePublicId = () => {
-
   return nanoid();
 };
+
+/**
+ * Generate product sku
+ * @param string to be generate dynamic
+ * @returns 5 characters of nano id
+ */
+export const generateSKU = (string) => {
+  const nanoid = customAlphabet(string, 5)
+  return nanoid()
+}
 
 export const getIp = (req) => {
   return req.split(':').pop();
@@ -57,25 +66,13 @@ export const getTimesTamp = (date) => {
 export const getRoleId = async (role_name) => {
   // get role for Admin and User 
   const roleData = await Role.findOne({
-    role_name:role_name,
+    role_name: role_name,
     is_deleted: false,
   });
 
-  if(roleData){
-  return roleData.public_id;
-  }else 
-  { return false; }
-};
-
-export const getGameById = async (id) => {
-  // get game by ID
-  const gameData = {}
-  //  await Game.findOne({
-  //   id,
-  //   is_deleted: false,
-  // });
-
-  return gameData;
+  if (roleData) {
+    return roleData.public_id;
+  } else { return false; }
 };
 
 // return only card number
@@ -88,32 +85,7 @@ export const sortbySuit = (card) => {
   return card.replace(/[^a-zA-Z]/g, '');
 };
 
-/**
- * If the suit is a club or spade, return true, otherwise return false.
- * @param suit - a string representing the suit of the card.
- * @returns A boolean value.
- */
-export const isBlackSuit = (suit) => {
-  if (suit === 'C' || suit === 'S') {
-    return true;
-  }
-  return false;
-};
-
-/**
- * If the suit is a diamond or a heart, return true, otherwise return false.
- * @param suit - a string representing the suit of the card.
- * @returns A boolean value.
- */
-export const isRedSuit = (suit) => {
-  if (suit === 'D' || suit === 'H') {
-    return true;
-  }
-  return false;
-};
-
-
-export const createNotification= async (user_id, message) => {
+export const createNotification = async (user_id, message) => {
   const createNotification = await Notification.create({
     public_id: generatePublicId(),
     user_id,

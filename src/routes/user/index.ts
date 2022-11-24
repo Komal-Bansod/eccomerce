@@ -89,7 +89,7 @@ const UserRoute = Router();
  *         updated_at: string
  *         deleted_at: string
  *       status_code: 201
- *       status_message: user created successfully
+ *       status_message: User Created successfully
  *       response_error: false
  */
 
@@ -98,7 +98,7 @@ const UserRoute = Router();
  * @swagger
  * /api/user:
  *   post:
- *     summary: create user
+ *     summary: Create user
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -108,13 +108,13 @@ const UserRoute = Router();
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       201:
- *         description: the user was successfully created
+ *         description: The user was successfully created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/definitions/userResponse'
  *       404:
- *         description: package can not be found
+ *         description: User can not be found
  *         content:
  *           application/json:
  *             schema:
@@ -139,10 +139,10 @@ UserRoute.use(authenticateUser);
  *       properties:
  *         currentPassword:
  *           type: string
- *           description: user currentPassword
+ *           description: User currentPassword
  *         newPassword:
  *           type: string
- *           description: user newPassword
+ *           description: User newPassword
  *       example:
  *         currentPassword: string
  *         newPassword: string
@@ -163,16 +163,16 @@ UserRoute.use(authenticateUser);
  *         updated_at: string
  *         deleted_at: string
  *       status_code: 200
- *       status_message: user password updated successfully
+ *       status_message: User password updated successfully
  *       response_error: false
  */
 
 /**
  *
  * @swagger
- * /api/user/changePassword:
+ * /api/user/change-password:
  *   post:
- *     summary: change password 
+ *     summary: Change password 
  *     tags: [User]
  *     requestBody:
  *       required: true
@@ -182,13 +182,13 @@ UserRoute.use(authenticateUser);
  *             $ref: '#/components/schemas/UserPassword'
  *     responses:
  *       201:
- *         description: the user password successfully updated
+ *         description: The user password successfully updated
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/definitions/userResponsePassword'
  *       404:
- *         description: user not found
+ *         description: User not found
  *         content:
  *           application/json:
  *             schema:
@@ -198,7 +198,7 @@ UserRoute.use(authenticateUser);
  *
  */
 
- UserRoute.post('/changePassword',  createChangePasswordHandler ); // Register User
+ UserRoute.post('/change-password',  createChangePasswordHandler ); // Register User
 /**
  * @swagger
  * definitions:
@@ -222,14 +222,14 @@ UserRoute.use(authenticateUser);
  *         updated_at: string
  *         deleted_at: string
  *       status_code: 200
- *       status_message: get user list successfully
+ *       status_message: User List Retrieved Successfully
  *       response_error: false
  */
 /**
  * @swagger
  * /api/user:
  *   get:
- *     summary: Returns All user
+ *     summary: Return All user
  *     tags: [User]
  *     parameters: 
  *       - in : query
@@ -254,7 +254,7 @@ UserRoute.use(authenticateUser);
  *           type: string
  *     responses:
  *       200:
- *         description: get the list of the user
+ *         description: Get the list of the user
  *         content:
  *           application/json:
  *             schema:
@@ -276,18 +276,18 @@ UserRoute.get('/', getListHandler);
   * @swagger
   * /api/user/{id}:
   *   get:
-  *     summary: return single user
+  *     summary: Return single user
   *     tags: [User]
   *     parameters:
   *       - in : path
   *         name: id
-  *         description: id of user
+  *         description: Id of user
   *         schema:
   *           type: string
   *         required: true
   *     responses:
   *       200:
-  *         description: get single user
+  *         description: Get single user
   *         content:
   *           application/json:
   *             schema:
@@ -376,7 +376,7 @@ UserRoute.get('/:id', getSingleHandler);
  *         updated_at: string
  *         deleted_at: string
  *       status_code: 200
- *       status_message: user update successfully
+ *       status_message: User Updated Successfully
  *       response_error: false
  */
 /**
@@ -384,7 +384,7 @@ UserRoute.get('/:id', getSingleHandler);
   * @swagger
   * /api/user/{updateId}:
   *   put:
-  *     summary: update user
+  *     summary: Update user
   *     tags: [User]
   *     parameters:
   *       - in: path
@@ -401,13 +401,13 @@ UserRoute.get('/:id', getSingleHandler);
   *             $ref: '#/components/schemas/updateUser'
   *     responses:
   *       200:
-  *         description: the user was successfully updated
+  *         description: The user was successfully updated
   *         content:
   *           application/json:
   *             schema:
   *               $ref: '#/definitions/userUpdateResponse'
   *       404:
-  *         description: user can not be found
+  *         description: User can not be found
   *         content:
   *           application/json:
   *             schema:
@@ -419,6 +419,17 @@ UserRoute.get('/:id', getSingleHandler);
 
 UserRoute.put('/:updateId', updateHandler);
 
+
+/**
+ * @swagger
+ * definitions:
+ *   deleteUserResponse:
+ *     example:
+ *       data: {}
+ *       status_code: 200
+ *       status_message: User Deleted Successfully
+ *       response_error: false
+ */
 /**
  * @swagger
  * components:
@@ -440,7 +451,7 @@ UserRoute.put('/:updateId', updateHandler);
   * @swagger
   * /api/user/{deleteId}:
   *   delete:
-  *     summary: delete user
+  *     summary: Delete user
   *     tags: [User]
   *     parameters:
   *       - in: path
@@ -457,13 +468,13 @@ UserRoute.put('/:updateId', updateHandler);
   *             $ref: '#/components/schemas/deleteUser'
   *     responses:
   *       200:
-  *         description: the user was successfully updated
+  *         description: The user was successfully updated
   *         content:
   *           application/json:
   *             schema:
   *               $ref: '#/definitions/deleteUserResponse'
   *       404:
-  *         description: user can not be found
+  *         description: User can not be found
   *         content:
   *           application/json:
   *             schema:

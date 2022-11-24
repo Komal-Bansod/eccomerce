@@ -30,6 +30,6 @@ const ReviewsSchema: Schema = new Schema({
   deleted_at: { type: String },
 });
 
-const Reviews = mongoose.model<IReviewsModel>('Reviews', ReviewsSchema);
+const Reviews = mongoose.model<IReviewsModel>('reviews', ReviewsSchema);
 
 export default Reviews;

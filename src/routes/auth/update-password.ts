@@ -35,10 +35,12 @@ export const updatePassword = async (req: Request, res: Response) => {
        return res.status(StatusCodes.OK).send(responseGenerators(updatePassword, StatusCodes.OK, REGISTER.PASSWORD_UPDATE, false));
     }
 
-    } catch (err) {
+    } catch (error) {
         // set logs Error function
-        logsErrorAndUrl(req, err);
- 
+        logsErrorAndUrl(req, error);
+        if (error instanceof ValidationError) {
+          return res.status(StatusCodes.BAD_REQUEST).send(responseValidation(StatusCodes.BAD_REQUEST, error.message, true));
+        }
         return res.status(401).json({
           message: 'Unauthorized access. token expired.',
         });

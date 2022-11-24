@@ -7,13 +7,13 @@ import { getJwtF } from '../../helpers/jwt.helper';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import User from '../../models/user.model';
 import { verifyJwt } from '../../helpers/jwt.helper';
-import { verifyTokenSchema } from '../../helpers/validation/verifyToken.validation';
+import { verifyTokenSchema } from '../../helpers/validation/verify-token.validation';
 
-export const Token = async (req: Request, res: Response) => {
+export const verifyToken = async (req: Request, res: Response) => {
     try {
        await verifyTokenSchema.validateAsync(req.body);
-        const { verifyToken } = req.body
-        const tokenDataRequestBody = await verifyJwt(verifyToken);
+        const { token } = req.body
+        const tokenDataRequestBody = await verifyJwt(token);
     
         const findUserCredential = await User.findOne({ public_id: tokenDataRequestBody.userId, email: tokenDataRequestBody.email })
    
@@ -30,9 +30,11 @@ export const Token = async (req: Request, res: Response) => {
                 .status(StatusCodes.OK)
                 .send(responseGenerators({}, StatusCodes.OK, ERROR.TOKEN_MATCH, true));
         }    
-    }   catch (err) {
-        logsErrorAndUrl(req, err);
-    
+    }   catch (error) {
+        logsErrorAndUrl(req, error);
+        if (error instanceof ValidationError) {
+          return res.status(StatusCodes.BAD_REQUEST).send(responseValidation(StatusCodes.BAD_REQUEST, error.message, true));
+        }
         return res.status(401).json({
           message: 'Unauthorized access. token expired.',
         });

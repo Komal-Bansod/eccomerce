@@ -7,7 +7,7 @@ import { updateHandler } from './put.role';
 
 const RoleRoute = Router();
 
-// RoleRoute.use(authenticateUser);
+RoleRoute.use(authenticateUser);
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ const RoleRoute = Router();
  *         is_deleted: boolean
  *         created_at: string
  *       status_code: 200
- *       status_message: Role created successfully.
+ *       status_message: Get role successfully.
  *       response_error: false
  */
 
@@ -91,8 +91,8 @@ const RoleRoute = Router();
  * @swagger
  * /api/role/list:
  *   get:
- *     summary: Returns all roles
  *     tags: [Role]
+ *     summary: Returns all role
  *     parameters: 
  *       - in : query
  *         name: limit
@@ -116,7 +116,7 @@ const RoleRoute = Router();
  *           type: string
  *     responses:
  *       200:
- *         description: the list of the roles
+ *         description: The list of the roles
  *         content:
  *           application/json:
  *             schema:
@@ -124,7 +124,7 @@ const RoleRoute = Router();
  *               items:
  *                 $ref: '#/definitions/getRoleListResponse'
  *       404:
- *          description: The role was not found
+ *          description: The role  not found
  *          content:
  *           application/json:
  *             schema:
@@ -148,7 +148,7 @@ RoleRoute.get('/list', getListHandler);
  *             $ref: '#/components/schemas/Role'
  *     responses:
  *       200:
- *         description: The Role was successfully created
+ *         description: The Role successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -179,7 +179,7 @@ RoleRoute.post('/', createHandler);
  * @swagger
  * /api/role/{id}:
  *   get:
- *     summary: gets role by id
+ *     summary: Get role by id
  *     tags: [Role]
  *     parameters:
  *       - in : path
@@ -190,13 +190,13 @@ RoleRoute.post('/', createHandler);
  *         required: true
  *     responses:
  *       200:
- *         description: role by its id
+ *         description: Role by its id
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/definitions/getRoleResponse'
  *       400:
- *         description: role can not be found
+ *         description: Role can not be found
  *         content:
  *           application/json:
  *             schema:
@@ -242,7 +242,7 @@ RoleRoute.get('/:id', getSingleHandler);
  * @swagger
  * /api/role/{updateId}:
  *   put:
- *     summary: updates role by id
+ *     summary: Updates role by id
  *     tags: [Role]
  *     parameters:
  *       - in: path
@@ -279,6 +279,16 @@ RoleRoute.put('/:updateId', updateHandler);
 
 /**
  * @swagger
+ * definitions:
+ *   deleteRoleResponse:
+ *     example:
+ *       data: {}
+ *       status_code: 200
+ *       status_message: Role Deleted Successfully
+ *       response_error: false
+ */
+/**
+ * @swagger
  * components:
  *   schemas:
  *     deleteRole:
@@ -297,7 +307,7 @@ RoleRoute.put('/:updateId', updateHandler);
  * @swagger
  * /api/role/{deleteId}:
  *   delete:
- *     summary: delete role by id
+ *     summary: Delete role by id
  *     tags: [Role]
  *     parameters:
  *       - in: path
@@ -314,7 +324,7 @@ RoleRoute.put('/:updateId', updateHandler);
  *             $ref: '#/components/schemas/deleteRole'
  *     responses:
  *       200:
- *         description: The role was deleted
+ *         description: The role  deleted
  *         content:
  *           application/json:
  *             schema:

@@ -27,6 +27,14 @@ export const createHandler = async (req: Request, res: Response) => {
         .send(responseGenerators({}, StatusCodes.BAD_REQUEST, ROLE.NOT_FOUND, true));
     }
 
+    // check email 
+
+    const isEmailExist = await User.findOne({email:email})
+    if(isEmailExist){
+      return res
+      .status(StatusCodes.BAD_REQUEST)
+      .send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.EMAIL_ALREADY_EXIST, true));
+    }
     // hash the password
     const hashPass = await hashPassword(password);
 

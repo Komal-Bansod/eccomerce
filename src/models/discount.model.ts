@@ -1,10 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
-export interface IInventoryModel {
+export interface IDiscountModel {
     public_id: string;
     title: string;
-    quantity: number;
-    min: number;
+    amount: number;
+    is_active: boolean;
     created_by: string;
     updated_by: string;
     deleted_by: string;
@@ -15,11 +15,11 @@ export interface IInventoryModel {
     deleted_at: string;
 }
 
-const InventorySchema: Schema = new Schema({
+const DiscountSchema: Schema = new Schema({
     public_id: { type: String, unique: true },
     title: { type: String },
-    quantity: { type: Number },
-    min: { type: Number },
+    amount: { type: Number },
+    is_active:{type:Boolean, default: true},
     created_by: { type: String },
     updated_by: { type: String },
     deleted_by: { type: String },
@@ -29,6 +29,6 @@ const InventorySchema: Schema = new Schema({
     deleted_at: { type: String },
 });
 
-const Inventory = mongoose.model<IInventoryModel>('inventories', InventorySchema);
+const Discount = mongoose.model<IDiscountModel>('discounts', DiscountSchema);
 
-export default Inventory;
+export default Discount;

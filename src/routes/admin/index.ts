@@ -106,7 +106,7 @@ const AdminRoute = Router();
  *             $ref: '#/components/schemas/Admin'
  *     responses:
  *       200:
- *         description: The admin was successfully created
+ *         description: The admin successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -125,7 +125,7 @@ AdminRoute.post('/', createHandler);
  *     tags: [Admin]
  *     responses:
  *       200:
- *         description: the list of the admin
+ *         description: The list of the admin
  *         content:
  *           application/json:
  *             schema:
@@ -133,7 +133,7 @@ AdminRoute.post('/', createHandler);
  *               items:
  *                 $ref: '#/definitions/getAdminResponse'
  *       404:
- *          description: The admin was not found
+ *          description: The admin  not found
  *          content:
  *           application/json:
  *             schema:
@@ -184,7 +184,7 @@ AdminRoute.post('/', createHandler);
  *         required: true
  *     responses:
  *       200:
- *         description: Admin by its id
+ *         description: Get admin by its id
  *         content:
  *           application/json:
  *             schema:
@@ -244,7 +244,7 @@ AdminRoute.get('/:id', getSingleHandler);
  *     example:
  *       data: {}
  *       status_code: 200
- *       status_message: update schema successfully
+ *       status_message: Update admin Successfully
  *       response_error: false
  */
 
@@ -269,7 +269,7 @@ AdminRoute.get('/:id', getSingleHandler);
  *             $ref: '#/components/schemas/updateAdmin'
  *     responses:
  *       200:
- *         description: The admin was updated
+ *         description: The admin updated
  *         content:
  *           application/json:
  *             schema:
@@ -286,6 +286,16 @@ AdminRoute.get('/:id', getSingleHandler);
  */
 AdminRoute.put('/:updateId', updateHandler);
 
+/**
+ * @swagger
+ * definitions:
+ *   deleteAdminResponse:
+ *     example:
+ *       data: {}
+ *       status_code: 200
+ *       status_message: Admin  Deleted Successfully
+ *       response_error: false
+ */
 /**
  * @swagger
  * components:
@@ -307,7 +317,7 @@ AdminRoute.put('/:updateId', updateHandler);
  * @swagger
  * /api/admin/{deleteId}:
  *   delete:
- *     summary: delete admin by id
+ *     summary: Delete admin by id
  *     tags: [Admin]
  *     parameters:
  *       - in: path
@@ -315,7 +325,7 @@ AdminRoute.put('/:updateId', updateHandler);
  *         schema:
  *           type: string
  *         required: true
- *         description: admin id
+ *         description: Admin id
  *     requestBody:
  *       required: true
  *       content:
@@ -324,7 +334,7 @@ AdminRoute.put('/:updateId', updateHandler);
  *             $ref: '#/components/schemas/deleteAdmin'
  *     responses:
  *       200:
- *         description: The admin was deleted
+ *         description: The admin  deleted
  *         content:
  *           application/json:
  *             schema:

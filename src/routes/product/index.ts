@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { authenticateUser } from '../../middleware';
-import { deleteHandler } from './delete.category';
-import { getSingleHandler, getListHandler } from './get.category';
-import { createHandler } from './post.category';
-import { updateHandler } from './put.category';
+import { deleteHandler } from './delete.product';
+import { getSingleHandler, getListHandler } from './get.product';
+import { createHandler } from './post.product';
+import { updateHandler } from './put.product';
 
-const CategoryRoute = Router();
+const ProductRoute = Router();
 
-CategoryRoute.use(authenticateUser);
+ProductRoute.use(authenticateUser);
 
 /**
  * @swagger
@@ -23,16 +23,20 @@ CategoryRoute.use(authenticateUser);
 /**
  * @swagger
  * definitions:
- *   createCategoryResponse:
+ *   createProductResponse:
  *     example:
  *       data:
- *         name: string
  *         slug: string
+ *         name: string
  *         tags: array
- *         parent_id: string
  *         description: string
- *         feature_image: string
- *         sort_order: string
+ *         category_id: string
+ *         inventory_id: string
+ *         images: array
+ *         price: number
+ *         discount_id: string
+ *         sku: string
+ *         brand: string
  *       status_code: 200
  *       status_message: string
  *       response_error: false
@@ -42,89 +46,110 @@ CategoryRoute.use(authenticateUser);
  * @swagger
  * components:
  *   schemas:
- *     Category:
+ *     Product:
  *       type: object
  *       required:
- *         - name
  *         - slug
+ *         - name
+ *         - category_id
+ *         - inventory_id
  *       properties:
- *         name:
- *           type: string
- *           description: name
  *         slug:
  *           type: string
  *           description: slug
- *         tags:
+ *         name:
  *           type: string
+ *           description: name
+ *         tags:
+ *           type: array
  *           description: tags
  *         description:
  *           type: string
  *           description: description
- *         parent_id:
+ *         category_id:
  *           type: string
- *           description: parent_id
- *         feature_image:
+ *           description: category_id
+ *         inventory_id:
  *           type: string
- *           description: feature_image
- *         sort_order:
+ *           description: inventory_id
+ *         images:
+ *           type: array
+ *           description: url and primary 
+ *         price:
+ *           type: number
+ *           description: price
+ *         discount_id:
  *           type: string
- *           description: sort_order
+ *           description: discount_id
+ *         sku:
+ *           type: array
+ *           description: sku
+ *         brand:
+ *           type: string
+ *           description: brand
+ * 
+ * 
  *       example:
- *         name: string
  *         slug: string
- *         tags: string
+ *         name: string
+ *         tags: array
  *         description: string
- *         feature_image: string
- *         sort_order: string
+ *         category_id: string
+ *         inventory_id: string
+ *         images: array 
+ *         price: number
+ *         discount_id: string
+ *         brand: string
+ * 
  */
 
 /**
  * @swagger
  *  tags:
- *    name: Category
- *    description: Category Document
+ *    name: Product
+ *    description: Product Document
  */
 
 /**
  * @swagger
- * /api/category:
+ * /api/product:
  *   post:
- *     summary: Create category for system
- *     tags: [Category]
+ *     summary: Create product for system
+ *     tags: [Product]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Category'
+ *             $ref: '#/components/schemas/Product'
  *     responses:
  *       200:
- *         description: The category  successfully created
+ *         description: The product successfully created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/createCategoryResponse'
+ *               $ref: '#/definitions/createProductResponse'
  *       500:
  *         description: Something went wrong, please try again later.
  */
- CategoryRoute.post('/', createHandler);
+ ProductRoute.post('/', createHandler);
 
 
 /**
  * @swagger
- * /api/category/list:
+ * /api/product/list:
  *   get:
- *     summary: Returns all category
- *     tags: [Category]
+ *     summary: Returns all Product
+ *     tags: [Product]
  *     parameters: 
  *       - in : query
  *         name: limit
- *         description: limit of page  category
+ *         description: limit of page Product
  *         schema:
  *           type: integer
  *       - in : query
  *         name: offset
- *         description:  page number  category
+ *         description:  page number  Product
  *         schema:
  *           type: integer
  *       - in : query
@@ -139,15 +164,15 @@ CategoryRoute.use(authenticateUser);
  *           type: string
  *     responses:
  *       200:
- *         description: The list of the category
+ *         description: The list of the Product
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/definitions/getCategoryResponse'
+ *                 $ref: '#/definitions/createProductResponse'
  *       404:
- *          description: The category  not found
+ *          description: The Product  not found
  *          content:
  *           application/json:
  *             schema:
@@ -156,53 +181,30 @@ CategoryRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  */
 
- CategoryRoute.get('/list', getListHandler);
+ ProductRoute.get('/list', getListHandler);
 
 /**
  * @swagger
- * definitions:
- *   getCategoryResponse:
- *     example:
- *       data:
- *         public_id: string
- *         name: string
- *         slug: string
- *         tags: array
- *         parent_id: string
- *         description: string
- *         feature_image: string
- *         sort_order: string
- *         visible_on_homepage: boolean
- *         status: boolean
- *         is_deleted: boolean
- *         created_at: string
- *       status_code: 200
- *       status_message: string
- *       response_error: false
- */
-
-/**
- * @swagger
- * /api/category/{id}:
+ * /api/product/{id}:
  *   get:
- *     summary: Gets category by id
- *     tags: [Category]
+ *     summary: Gets Product by id
+ *     tags: [Product]
  *     parameters:
  *       - in : path
  *         name: id
- *         description: id of category
+ *         description: Id of Product
  *         schema:
  *           type: string
  *         required: true
  *     responses:
  *       200:
- *         description: Category by its id
+ *         description: Product by its id
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/getCategoryResponse'
+ *               $ref: '#/definitions/createProductResponse'
  *       400:
- *         description: Category can not be found
+ *         description: Product can not be found
  *         content:
  *           application/json:
  *             schema:
@@ -210,85 +212,103 @@ CategoryRoute.use(authenticateUser);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- CategoryRoute.get('/:id', getSingleHandler);
+ ProductRoute.get('/:id', getSingleHandler);
 
 
 /**
  * @swagger
  * components:
  *   schemas:
- *     updateCategory:
+ *     updateProduct:
  *       type: object
-*       properties:
- *         name:
- *           type: string
- *           description: name
+ *       properties:
  *         slug:
  *           type: string
  *           description: slug
- *         tags:
+ *         name:
  *           type: string
+ *           description: name
+ *         tags:
+ *           type: array
  *           description: tags
  *         description:
  *           type: string
  *           description: description
- *         parent_id:
+ *         category_id:
  *           type: string
- *           description: parent_id
- *         feature_image:
+ *           description: category_id
+ *         inventory_id:
  *           type: string
- *           description: feature_image
- *         sort_order:
+ *           description: inventory_id
+ *         images:
+ *           type: array
+ *           description: images
+ *         price:
+ *           type: number
+ *           description: price
+ *         discount_id:
  *           type: string
- *           description: sort_order
+ *           description: discount_id
+ *         sku:
+ *           type: string
+ *           description: sku
+ *         brand:
+ *           type: string
+ *           description: brand
+ * 
+ * 
  *       example:
- *         public_id: string
- *         name: string
  *         slug: string
- *         tags: string
+ *         name: string
+ *         tags: array
  *         description: string
- *         feature_image: string
- *         sort_order: string
+ *         category_id: string
+ *         inventory_id: string
+ *         images: string
+ *         price: number
+ *         discount_id: string
+ *         brand: string
+ * 
  */
 /**
  * @swagger
  * definitions:
- *   updateCategoryResponse:
+ *   updateProductResponse:
  *     example:
  *       data: {}
  *       status_code: 200
- *       status_message: Category Updated Successfully
+ *       status_message: Update product successfully
  *       response_error: false
  */
 
 /**
  * @swagger
- * /api/category/{updateId}:
+ * /api/product/{updateId}:
  *   put:
- *     summary: Updates category by id
- *     tags: [Category]
+ *     summary: Updates product by id
+ *     tags: [Product]
  *     parameters:
  *       - in: path
  *         name: updateId
  *         schema:
  *           type: string
  *         required: true
- *         description: Category id
+ *         description: Product id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/updateCategory'
+ *             $ref: '#/components/schemas/updateProduct'
  *     responses:
  *       200:
- *         description: The category  updated
+ *         description: The product updated
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/createCategoryResponse'
+ *               $ref: '#/definitions/createProductResponse'
  *       404:
- *         description: Category can not be found
+ *         description: Product can not be found
  *         content:
  *           application/json:
  *             schema:
@@ -297,23 +317,23 @@ CategoryRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  *
  */
- CategoryRoute.put('/:updateId', updateHandler);
+ ProductRoute.put('/:updateId', updateHandler);
 
 /**
  * @swagger
  * definitions:
- *   deleteCategoryResponse:
+ *   deleteProductResponse:
  *     example:
  *       data: {}
  *       status_code: 200
- *       status_message: Category Deleted Successfully
+ *       status_message: Delete  product successfully
  *       response_error: false
  */
 /**
  * @swagger
  * components:
  *   schemas:
- *     deleteCategory:
+ *     deleteProduct:
  *       type: object
  *       required:
  *         - is_deleted
@@ -328,32 +348,32 @@ CategoryRoute.use(authenticateUser);
 
 /**
  * @swagger
- * /api/category/{deleteId}:
+ * /api/product/{deleteId}:
  *   delete:
- *     summary: Delete category by id
- *     tags: [Category]
+ *     summary: Delete product by id
+ *     tags: [Product]
  *     parameters:
  *       - in: path
  *         name: deleteId
  *         schema:
  *           type: string
  *         required: true
- *         description: category id
+ *         description: Product id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/deleteCategory'
+ *             $ref: '#/components/schemas/deleteProduct'
  *     responses:
  *       200:
- *         description: The category deleted
+ *         description: The Product  Deleted
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/ deleteCategoryResponse'
+ *               $ref: '#/definitions/ deleteProductResponse'
  *       404:
- *         description: Category can not be found
+ *         description: Product can not be found
  *         content:
  *           application/json:
  *             schema:
@@ -362,9 +382,9 @@ CategoryRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  *
  */
- CategoryRoute.delete('/:deleteId', deleteHandler);
+ ProductRoute.delete('/:deleteId', deleteHandler);
 
 
 
 
-export default CategoryRoute;
+export default ProductRoute;

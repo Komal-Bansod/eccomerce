@@ -76,7 +76,7 @@ NotificationRoute.use(authenticateUser);
  *             $ref: '#/components/schemas/Notification'
  *     responses:
  *       200:
- *         description: The notification was successfully created
+ *         description: The notification  successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -132,7 +132,7 @@ NotificationRoute.use(authenticateUser);
  *           type: string
  *     responses:
  *       200:
- *         description: the list of the notification
+ *         description: The list of  notification
  *         content:
  *           application/json:
  *             schema:
@@ -140,7 +140,7 @@ NotificationRoute.use(authenticateUser);
  *               items:
  *                 $ref: '#/definitions/getNotificationResponse'
  *       404:
- *          description: The category was not found
+ *          description: The notification not found
  *          content:
  *           application/json:
  *             schema:
@@ -156,24 +156,24 @@ NotificationRoute.use(authenticateUser);
  * @swagger
  * /api/notification/{id}:
  *   get:
- *     summary: gets category by id
+ *     summary: Get notification by id
  *     tags: [Notification]
  *     parameters:
  *       - in : path
  *         name: id
- *         description: id of notification module
+ *         description: Id of notification module
  *         schema:
  *           type: string
  *         required: true
  *     responses:
  *       200:
- *         description: notification  by its id
+ *         description: Notification  by its id
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/definitions/getNotificationResponse'
  *       400:
- *         description: notification not be found
+ *         description: Notification not be found
  *         content:
  *           application/json:
  *             schema:
