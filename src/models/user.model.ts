@@ -3,6 +3,8 @@ import mongoose, { Schema } from 'mongoose';
 export interface IUser {
   public_id: string
   role_id: string;
+  guide_id: string;
+  admin_id: string;
   user_details_id: string;
   username: string;
   email: string;
@@ -26,6 +28,8 @@ export interface IUser {
 const UserSchema: Schema = new Schema({
   public_id: { type: String, unique: true },
   user_details_id: { type: String },
+  guide_id:{type:String},
+  admin_id:{type:String},
   username: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },

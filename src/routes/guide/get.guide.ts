@@ -1,44 +1,33 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR, ITokenData,Users, ROLE} from '../../common/global-constants';
+import { ERROR, ITokenData,Users, ROLE, GUIDE} from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import { getRoleId, setPagination } from '../../common/common-functions';
 import User from '../../models/user.model';
-import { userSingleSchema }from '../../helpers/validation/user.validation'
+import { guideSingleSchema }from '../../helpers/validation/guide.validation'
+import Guide from '../../models/guide.model';
 
 // get single user
 export const getSingleHandler = async (req: Request, res: Response) => {
   try {
-    await userSingleSchema.validateAsync(req.params);
+    await guideSingleSchema.validateAsync(req.params);
 
     const { id } = req.params;
 
-    const findId = await User.findOne({public_id:id})
+    const findId = await Guide.findOne({public_id:id})
     if(!findId){
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.NOT_FOUND, true));
+        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, true));
     }
-
-    const tokenData = (req.headers as any).tokenData as ITokenData;
-
-    // get Role id
-    const userRoleId = await getRoleId('User');
-
-    if (!userRoleId) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, ROLE.NOT_FOUND, true));
-    }
-
-    // get the operator here
-    const singleOperator = await User.findOne(
-      { public_id: id, is_delete: false, is_active: true, role_id: userRoleId },
+    
+    const singleGuide = await Guide.findOne(
+      { public_id: id, is_delete: false},
       { _id: 0, __v: 0, password: 0 },
     );
 
-    return res.status(StatusCodes.OK).send(responseGenerators(singleOperator, StatusCodes.OK, Users.FETCHED, false));
+    return res.status(StatusCodes.OK).send(responseGenerators(singleGuide, StatusCodes.OK, GUIDE.FOUND, false));
   } catch (error) {
     // set logs Error function
     logsErrorAndUrl(req, error);
@@ -51,48 +40,36 @@ export const getSingleHandler = async (req: Request, res: Response) => {
   }
 };
 
-// get list operator
+// get list Guide
 export const getListHandler = async (req: Request, res: Response) => {
   try {
-  //  await operatorListSchema.validateAsync(req.query as any);
 
     const { search } = req.query as any;
-
-    // get Role id
-    const userRoleId = await getRoleId('User');
-
-    if (!userRoleId) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, ROLE.NOT_FOUND, true));
-    }
 
     // get pagination
     const pagination = await setPagination(req.query);
 
     let where = {
-      is_deleted: false,
-      is_active: true,
-      role_id: userRoleId,
+      is_deleted: false
     };
 
-    if (search) {
-      where = {
-        ...where,
-        ...{
-          username: new RegExp(search.toString(), 'i'),
-        },
-      };
-    }
+    // if (search) {
+    //   where = {
+    //     ...where,
+    //     ...{
+    //       'personal_details.first_name': new RegExp(search.toString(), 'i'),
+    //     },
+    //   };
+    // }
 
-    // get the operator here
-    const listOperator = await User.find(where)
+    // get the Guide here
+    const listGuide = await Guide.find(where)
       .sort(pagination.sort)
       .skip(pagination.offset)
       .limit(pagination.limit)
       .select({ _id: 0, __v: 0 });
 
-    return res.status(StatusCodes.OK).send(responseGenerators(listOperator, StatusCodes.OK, Users.FETCHED, false));
+    return res.status(StatusCodes.OK).send(responseGenerators(listGuide, StatusCodes.OK, Users.FETCHED, false));
   } catch (error) {
     // set logs Error function
     logsErrorAndUrl(req, error);

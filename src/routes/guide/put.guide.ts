@@ -1,50 +1,80 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR, ROLE, Users } from '../../common/global-constants';
+import { ERROR, GUIDE, ROLE, Users } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
-import {  setTimesTamp } from '../../common/common-functions';
+import { setTimesTamp, hashPassword } from '../../common/common-functions';
 import User from '../../models/user.model';
-import {userUpdateSchema } from '../../helpers/validation/user.validation'
+import {guideUpdateSchema} from '../../helpers/validation/guide.validation'
 import UserDetails from '../../models/user-details.model';
+import Guide from '../../models/guide.model';
 // update user
 export const updateHandler = async (req: Request, res: Response) => {
   try {
-     await userUpdateSchema .validateAsync({ ...req.body, ...req.params });
+    await guideUpdateSchema.validateAsync({ ...req.body, ...req.params });
 
-    const {username,email,mobile,  display_name,gender,date_of_birth, first_name, last_name,address,profile_pic } = req.body;
+    const { personal_details, contact_details, company_details, job_history, other_certificates, username, email, mobile, display_name, gender, date_of_birth, first_name, last_name, address, profile_pic } = req.body;
 
     const { updateId } = req.params;
 
-    // update user here
-    const updateUser = await User.findOneAndUpdate(
-      { public_id: updateId,  is_deleted: false },
+    const findGuide = await Guide.findOne({ public_id: updateId, is_deleted:false})
+    if (!(findGuide)){
+      res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, true));
+    }
+  
+    const findUser = await User.findOne({ guide_id: updateId, is_deleted:false })
+    if (!(findUser )){
+      res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, true));
+    }
+    const findUserDetails = await UserDetails.findOne({ public_id: findUser.user_details_id})
+    if (!(findUserDetails )){
+      res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, true));
+    }
+
+
+
+    // update guide here
+    const updateGuide = await Guide.findOneAndUpdate(
+      { public_id: updateId, is_deleted: false },
       {
-        mobile,
-        updated_at: setTimesTamp(),
-        // updated_by: this.request.user.userId,
+        personal_details,
+        contact_details,
+        company_details,
+        job_history,
+        other_certificates,
+        address,
+        updated_at: setTimesTamp()
+
       },
       { returnOriginal: false },
     );
+    // update user here
 
-    if (!updateUser) {
-      res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.NOT_FOUND, true));
-    }
-
+    const updateUser = await User.findOneAndUpdate(
+      { public_id: findUser.public_id , is_deleted: false },
+       {
+       
+        username,
+        mobile,
+        updated_at: setTimesTamp(),
+       },
+      { returnOriginal: false },
+    );
+console.log(updateUser)
     //update user meta data here  
-let user_details_id = updateUser.user_details_id
-  const updateUserMetaData = await UserDetails.findOneAndUpdate({public_id:user_details_id},{
-    display_name,
-    gender,
-    date_of_birth,
-    first_name,
-    last_name,
-    address,
-    profile_pic,
-  }, { returnOriginal: false },)
+  
+    const updateUserMetaData = await UserDetails.findOneAndUpdate({ public_id: findUserDetails.public_id }, {
+      display_name,
+      gender,
+      date_of_birth,
+      first_name,
+      last_name,
+      address,
+      profile_pic,
+    }, { returnOriginal: false },)
 
 
-    return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.OK, Users.UPDATED, false));
+    return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.OK, GUIDE.UPDATED, false));
   } catch (error) {
     // set logs Error function
     logsErrorAndUrl(req, error);

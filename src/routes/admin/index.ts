@@ -7,7 +7,7 @@ import { updateHandler } from './put.admin';
 
 const AdminRoute = Router();
 
- AdminRoute.use(authenticateUser);
+ //AdminRoute.use(authenticateUser);
 
 /**
  * @swagger

@@ -21,38 +21,23 @@ export const updateHandler = async (req: Request, res: Response) => {
 
     const { updateId } = req.params;
 
-
-    // check admin with this email exist or not
-    const adminIsAvailable = await User.findOne({
-      email,
-      is_deleted: false,
-      public_id: { $ne: updateId },
-    });
-
-    if (adminIsAvailable) {
-   return   res
-        .status(StatusCodes.BAD_REQUEST)
-        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, ADMIN.EMAIl_ALREADY_EXIST, true));
-    }
-
     // check admin is present or not
     const adminData = await Admin.findOne({
-      email,
+      public_id: updateId,
       is_deleted: false,
     });
 
     if (!adminData) {
-   return   res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, ADMIN.NOT_FOUND, true));
+      return res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, ADMIN.NOT_FOUND, true));
     }
 
     // update user table
     const userData = await User.findOneAndUpdate(
       { public_id: updateId },
       {
-        email,
         first_name,
         last_name,
-        date_of_birth,
+        date_of_birth,      // format yyyy-mm-dd
         updated_by: '',
         updated_at: setTimesTamp(),
       },
@@ -60,12 +45,11 @@ export const updateHandler = async (req: Request, res: Response) => {
 
     // // update admin table
     await Admin.findOneAndUpdate(
-      { role_id: userData.role_id},
+      { role_id: userData.role_id },
       {
-        email,
         first_name,
         last_name,
-        date_of_birth
+        date_of_birth             // format yyyy-mm-dd
       },
     );
 

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { authenticateUser } from '../../middleware';
 import { deleteHandler } from './delete.guide';
 import { getListHandler, getSingleHandler } from './get.guide';
-import { createHandler, createChangePasswordHandler } from './post.guide';
+import { createHandler } from './post.guide';
 import { updateHandler } from './put.guide';
 
 const GuideRoute = Router();
@@ -24,40 +24,41 @@ const GuideRoute = Router();
  *     Guide:
  *       type: object
  *       required:
- *         - username
- *         - first_name
- *         - last_name
- *         - mobile
- *         - email
- *         - password
- *         - role_id
+ *         - personal_details
+ *         - contact_details
+ *         - address
+ *         - other_certificates
  *       properties:
- *         username:
+ *         personal_details:
  *           type: string
- *           description: username
- *         mobile:
+ *           description: personal_details
+ *         contact_details:
  *           type: string
- *           description: user mobile number
- *         last_name:
+ *           description: contact_details
+ *         address:
  *           type: string
- *           description: user last name
- *         first_name:
+ *           description: address
+ *         company_details:
  *           type: string
- *           description: user first_name
- *         email:
+ *           description: company_details
+ *         job_history:
  *           type: string
- *           description: user email
+ *           description: job_history
+ *         other_certificates:
+ *           type: string
+ *           description: other_certificates
  *         password:
  *           type: string
- *           description: user password
+ *           description: password
  *       example:
- *         username: string
- *         role_id: string
- *         first_name: string
- *         last_name: string
+ *         personal_details: object
+ *         contact_details: object
+ *         address: object
+ *         company_details: object
+ *         job_history: object
+ *         other_certificates: object
  *         password: string
- *         mobile: string
- *         email: string
+ * 
  */
 /**
  * @swagger
@@ -73,14 +74,13 @@ const GuideRoute = Router();
  *   guideResponse:
  *     example:
  *       data:
- *         first_name: string
- *         last_name: string
- *         email: string
- *         mobile: string
- *         password: string
  *         role_id: string
- *         is_admin_id: boolean
- *         user_details_id: string
+ *         personal_details: string
+ *         contact_details: string
+ *         address: string
+ *         company_details: string
+ *         job_history: string
+ *         other_certificates: object
  *         created_by: string
  *         updated_by: string
  *         deleted_by: string
@@ -108,7 +108,7 @@ const GuideRoute = Router();
  *             $ref: '#/components/schemas/Guide'
  *     responses:
  *       201:
- *         description: The guide was successfully created
+ *         description: The guide successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -134,15 +134,13 @@ GuideRoute.use(authenticateUser);
  *   guideGetResponse:
  *     example:
  *       data:
- *         email: string
- *         mobile: string
- *         password: string
  *         role_id: string
- *         is_admin_id: boolean
- *         user_details_id: string
- *         is_active: string
- *         is_block: boolean
- *         twoFA_enable: string
+ *         personal_details: object
+ *         contact_details: object
+ *         address: object
+ *         company_details: object
+ *         job_history: object
+ *         other_certificates: object
  *         created_by: string
  *         updated_by: string
  *         deleted_by: string
@@ -191,7 +189,7 @@ GuideRoute.use(authenticateUser);
  *               items:
  *                 $ref: '#/definitions/guideGetResponse'
  *       404:
- *          description: The guide was not found
+ *          description: The guide  not found
  *          content:
  *           application/json:
  *             schema:
@@ -224,7 +222,7 @@ GuideRoute.get('/', getListHandler);
   *               items:
   *                 $ref: '#/definitions/guideGetResponse'
   *       404:
-  *          description: The guide was not found
+  *          description: The guide not found
   *          content:
   *           application/json:
   *             schema:
@@ -240,72 +238,49 @@ GuideRoute.get('/:id', getSingleHandler);
  *   schemas:
  *     updateGuide:
  *       type: object
- *       required:
- *         - username
- *       properties:
- *         username:
+*       properties:
+ *         personal_details:
  *           type: string
- *           description: username
- *         mobile:
+ *           description: personal_details
+ *         contact_details:
  *           type: string
- *           description: mobile
- *         display_name:
- *           type: string
- *           description: display_name
- *         first_name:
- *           type: string
- *           description: first_name
- *         last_name:
- *           type: string
- *           description: last_name
- *         gender:
- *           type: string
- *           description: gender
+ *           description: contact_details
  *         address:
  *           type: string
  *           description: address
+ *         company_details:
+ *           type: string
+ *           description: company_details
+ *         job_history:
+ *           type: string
+ *           description: job_history
+ *         other_certificates:
+ *           type: string
+ *           description: other_certificates
  *       example:
- *         username: string
- *         mobile: string
- *         display_name: string
+ *         personal_details: object
+ *         contact_details: object
+ *         address: object
+ *         company_details: object
+ *         job_history: object
+ *         other_certificates: object
  *         first_name: string
  *         last_name: string
- *         gender: string
- *         address: array
-
+ *         email: string
+ *         mobile: string
+ *         password: string
+ *         role_id: string
  * 
- *
+ * 
  */
 /**
  * @swagger
  * definitions:
  *   guideUpdateResponse:
  *     example:
- *       data:
- *         role_id: string
- *         user_details_id: string
- *         username: string
- *         password: string
- *         mobile: string
- *         email: string 
- *         display_name: string
- *         gender: string
- *         date_of_birth: string
- *         first_name: string
- *         last_name: string
- *         address: string
- *         profile_pic: string
- *         is_active: string
- *         is_block: boolean
- *         created_by: string
- *         updated_by: string
- *         deleted_by: string
- *         is_deleted: string
- *         created_at: string
- *         updated_at: string
- *         deleted_at: string
+ *       data: {}
  *       status_code: 200
- *       status_message: User Updated Successfully
+ *       status_message: Guide Updated Successfully
  *       response_error: false
  */
 /**
@@ -359,22 +334,7 @@ GuideRoute.put('/:updateId', updateHandler);
  *       status_message: Guide Deleted Successfully
  *       response_error: false
  */
-/**
- * @swagger
- * components:
- *   schemas:
- *     deleteGuide:
- *       type: object
- *       required:
- *         - is_deleted
- *       properties:
- *         is_deleted:
- *           type: boolean
- *           description: is_deleted 
- *       example:
- *         is_deleted: true
- *
- */
+
 /**
   *
   * @swagger
@@ -389,15 +349,9 @@ GuideRoute.put('/:updateId', updateHandler);
   *           type: string
   *         required: true
   *         description: guide  id
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema:
-  *             $ref: '#/components/schemas/deleteGuide'
   *     responses:
   *       200:
-  *         description: The guide was successfully updated
+  *         description: The guide successfully updated
   *         content:
   *           application/json:
   *             schema:

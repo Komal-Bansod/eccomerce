@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ADMIN, ERROR, ROLE } from '../../common/global-constants';
+import { ADMIN, ERROR, ROLE, NOTIFICATION_MESSAGE} from '../../common/global-constants';
 import Admin from '../../models/admin.model';
 import { adminLoginSchema } from '../../helpers/validation/admin.validation';
 import { logsErrorAndUrl, responseGenerators } from '../../lib';
-import { generatePublicId, getRoleId, hashPassword, setTimesTamp } from '../../common/common-functions';
+import { generatePublicId, getRoleId, hashPassword, createNotification,setTimesTamp } from '../../common/common-functions';
 import User from '../../models/user.model';
 import UserDetails from '../../models/user-details.model';
 /**
@@ -36,7 +36,7 @@ export const createHandler = async (req: Request, res: Response) => {
       first_name,
       last_name,
       email,
-      date_of_birth,
+      date_of_birth,                      // format yyyy-mm-dd
       created_by: '',
       created_at: setTimesTamp(),
     });
@@ -47,7 +47,7 @@ export const createHandler = async (req: Request, res: Response) => {
     const newUserMetaData = await new UserDetails({
       display_name,
       gender,
-      date_of_birth,
+      date_of_birth,                                           // format yyyy-mm-dd
       first_name,
       last_name,
       address,
@@ -57,6 +57,7 @@ export const createHandler = async (req: Request, res: Response) => {
 
     // user create
     const userData = await User.create({
+      admin_id: adminData.public_id,
       role_id: userRoleId,
       user_details_id:newUserMetaDataId,
       username,
@@ -67,6 +68,9 @@ export const createHandler = async (req: Request, res: Response) => {
       public_id: generatePublicId(),
       created_at: setTimesTamp(),
     });
+
+    createNotification(userData.public_id ,NOTIFICATION_MESSAGE.ADMIN)
+
     return res
       .status(StatusCodes.OK)
       .send(

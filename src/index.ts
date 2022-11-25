@@ -19,9 +19,9 @@ import swaggerUi from 'swagger-ui-express';
 import { features } from 'process';
 import CategoryRoute from './routes/category'
 import NotificationRoute from './routes/notification'
-import ProductRoute from './routes/product'
+
 import UploadRoute from './routes/upload'
-import InventoryRoute from './routes/inventory'
+
 import GuideRoute from './routes/guide';
 
 
@@ -420,9 +420,7 @@ app.use('/api/user', UserRoute);
 app.use('/api/guide', GuideRoute);
 app.use('/api/category', CategoryRoute);
 app.use('/api/notification', NotificationRoute)
-app.use('/api/product', ProductRoute)
 app.use('/api/upload', UploadRoute)
-app.use('/api/inventory', InventoryRoute)
 app.use((req: Request, res: Response) => {
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)

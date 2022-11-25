@@ -15,7 +15,8 @@ export const NOTIFICATION_MESSAGE = {
   USER_LOGIN: 'User login in E-commerce',
   RESET_PASSWORD: 'User requested for reset password.',
   FORGOT_PASSWORD: 'User requested for forgot password.',
-  UPDATE_PASSWORD: 'User updated password'
+  UPDATE_PASSWORD: 'User updated password',
+  ADMIN: 'New admin registered in E-commerce Platform'
 
 };
 export const REGISTER = {
@@ -44,7 +45,7 @@ export const RESET_PASSWORD = {
 
 
 export const FORGOT_PASSWORD = {
-  INVALID_EMAIL: 'Requested email not found.', 
+  INVALID_EMAIL: 'Requested email not found.',
   EMAIL_SENT_SUCCESS: 'Forgot password link sent, please check your inbox.',
   VERIFY_TOKEN_FAIL: 'Token Expired',
 };
@@ -78,10 +79,6 @@ export const CHANGE_PASSWORD = {
   SUCCESS: 'Your password has been changed successfully.',
 };
 
-export const REPORT = {
-  FETCHED: `Report fetch successfully.`,
-};
-
 export const DATE = {
   INVALID: 'Date is invalid .',
 };
@@ -105,12 +102,23 @@ export const Users = {
   ALREADY_USE: 'User Name already use in somewhere.',
 };
 
+export const GUIDE = {
+  ALREADY_EXIST: 'Guide already exist',
+  CREATED: 'Guide created successfully.',
+  UPDATED: 'Guide updated successfully.',
+  NOT_FOUND: 'Guide not found.',
+  EMAIL_ALREADY_EXIST: 'Email already exist in the system',
+  FOUND: 'Guide found successfully.',
+  NOT_DELETED: 'Not deleted.',
+  DELETED_SUCCESSFULLY: 'Guide deleted successfully',
+};
+
 export const ADMIN = {
   ALREADY_EXIST: 'Admin already exist',
   CREATED: 'Admin created successfully.',
   UPDATED: 'Admin updated successfully.',
   NOT_FOUND: 'Admin not found.',
-  EMAIl_ALREADY_EXIST: 'Email already exist in the system',
+  EMAIL_ALREADY_EXIST: 'Email already exist in the system',
   FOUND: 'Admin found successfully.',
   NOT_DELETED: 'Not deleted.',
   DELETED_SUCCESSFULLY: 'Admin deleted successfully',
@@ -133,28 +141,14 @@ export const CATEGORY = {
   CREATED: 'Category created successfully.',
   UPDATED: 'Category updated successfully.',
   NOT_FOUND: 'Category not found.',
-  EMAIl_ALREADY_EXIST: 'Email already exist in the system',
+  EMAIL_ALREADY_EXIST: 'Email already exist in the system',
   FOUND: 'Category found successfully.',
   DELETED_SUCCESSFULLY: 'Category deleted successfully',
 };
 
-export const PRODUCT = {
-  ALREADY_EXIST: 'Sku already exist',
-  CREATED: 'Product created successfully.',
-  UPDATED: 'Product updated successfully.',
-  NOT_FOUND: 'Product not found.',
-  FOUND: 'Product found successfully.',
-  DELETED_SUCCESSFULLY: 'Product deleted successfully',
-  UPLOAD: 'Product image uploaded successfully'
-};
-export const INVENTORY = {
-  CREATED: 'Inventory created successfully.',
-  UPDATED: 'Inventory updated successfully.',
-  NOT_FOUND: 'Inventory not found.',
-  FOUND: 'Inventory found successfully.',
-  DELETED_SUCCESSFULLY: 'Inventory deleted successfully',
-
-};
+export const UPLOAD = {
+  UPLOAD: 'file upload successfully',
+}
 
 export const NOTIFICATION = {
   ALREADY_EXIST: 'Notification already exist',

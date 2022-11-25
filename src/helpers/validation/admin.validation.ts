@@ -14,7 +14,6 @@ export const adminLoginSchema = Joi.object().keys({
 
 export const adminUpdateSchema = Joi.object().keys({
   updateId: Joi.string().required(),
-  email: Joi.string().email(),
   first_name: Joi.string().required(),
   last_name: Joi.string().required(),
   //mobile: Joi.string().required(),

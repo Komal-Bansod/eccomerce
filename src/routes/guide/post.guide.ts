@@ -1,148 +1,99 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR, REGISTER, ROLE, LOGIN, Users, NOTIFICATION_MESSAGE } from '../../common/global-constants';
-import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
-import { generatePublicId, getRoleId, hashPassword, removeFields, setTimesTamp, comparePassword, createNotification} from '../../common/common-functions';
+import { ERROR, ROLE,  NOTIFICATION_MESSAGE, GUIDE, Users } from '../../common/global-constants';
+import { logsErrorAndUrl, responseGenerators, } from '../../lib';
+import { generatePublicId, getRoleId, hashPassword,setTimesTamp, comparePassword, createNotification} from '../../common/common-functions';
 import User from '../../models/user.model';
-import { userCreateSchema, userChangePasswordSchema } from '../../helpers/validation/user.validation';
+import { guideCreateSchema} from '../../helpers/validation/guide.validation';
 import UserDetails from '../../models/user-details.model';
-import Role from '../../models/role.model';
 import { verifyJwt } from '../../helpers/jwt.helper'
+import Guide from '../../models/guide.model';
 
 
-// create user
+// create  guide 
 export const createHandler = async (req: Request, res: Response) => {
   try {
-    await userCreateSchema.validateAsync(req.body);
+ await guideCreateSchema.validateAsync(req.body);
 
-    const { username, email, password, mobile, first_name, last_name, is_admin, role_id } = req.body;
+    const {personal_details, contact_details,address,company_details,job_history,other_certificates,password} = req.body;
 
-    // get Role id
-    const userRoleId = await Role.findOne({ public_id: role_id });
-
+    const userRoleId = await getRoleId('Guide');
+    
     if (!userRoleId) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .send(responseGenerators({}, StatusCodes.BAD_REQUEST, ROLE.NOT_FOUND, true));
     }
+      // hash the password
+      if(password){
+      var hashPass = await hashPassword(password);
+      }
 
-    // check email 
+      const isEmailExist = await User.findOne({email:contact_details.employee_email_personal,})
+      if(isEmailExist){
+        return res
+        .status(StatusCodes.BAD_REQUEST)
+        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.EMAIL_ALREADY_EXIST, true));
+      }
+    // create guide  here
+    const newGuide = await Guide.create ({
+      public_id: generatePublicId(),
+      role_id:userRoleId ,
+      personal_details,
+      contact_details,
+      address,
+      company_details,
+      job_history,
+      other_certificates,
+      created_by: '',
+      created_at: setTimesTamp(),
 
-    const isEmailExist = await User.findOne({email:email})
-    if(isEmailExist){
-      return res
-      .status(StatusCodes.BAD_REQUEST)
-      .send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.EMAIL_ALREADY_EXIST, true));
-    }
-    // hash the password
-    const hashPass = await hashPassword(password);
-
+    })
+    
     const newUserMetaDataId = generatePublicId();
 
     const newUserMetaData = await new UserDetails({
-      first_name,
-      last_name,
+      display_name: newGuide.personal_details.first_name,
+      gender:newGuide.personal_details.gender,
+      date_of_birth:newGuide.personal_details.date_of_birth,
+      first_name:newGuide.personal_details.first_name,
+      last_name: newGuide.personal_details.last_name,
+      address:newGuide.address ,
+      profile_pic:newGuide.personal_details.profile_pic ,
       public_id: newUserMetaDataId
-    }).save();
+    }).save()
 
 
-    if (userRoleId.role_name === 'Admin') {
-      const newUser = await new User({
-        role_id: userRoleId.public_id,
-        user_details_id: newUserMetaDataId,
-        username,
-        email,
-        password: hashPass,
-        mobile,
-        is_admin: true,
-        public_id: generatePublicId(),
-        created_at: setTimesTamp(),
-
-      }).save()
-
-      createNotification( newUser.public_id,NOTIFICATION_MESSAGE.CREATE_USER)
-
-      return res
-        .status(StatusCodes.OK)
-        .send(responseGenerators(removeFields(newUser), StatusCodes.OK, REGISTER.SUCCESS, false));
-    }
-
-    // create new user here
-    const newUser = await new User({
-      role_id: userRoleId.public_id,
-      user_details_id: newUserMetaDataId,
-      username,
-      email,
-      password: hashPass,
-      mobile,
-      is_admin,
+    // user create
+    const userData = await User.create({
+      guide_id: newGuide.public_id,
+      role_id: userRoleId,
+      user_details_id:newUserMetaDataId,
+      username: newGuide.personal_details.first_name,
+      email: newGuide.contact_details.employee_email_personal,
+      password:hashPass,
+      mobile : newGuide.contact_details.mobile,
       public_id: generatePublicId(),
       created_at: setTimesTamp(),
-
-    }).save();
-    createNotification( newUser.public_id,NOTIFICATION_MESSAGE.CREATE_USER)
+    });
+    createNotification( userData.public_id,NOTIFICATION_MESSAGE.CREATE_USER)
 
 
     return res
       .status(StatusCodes.OK)
-      .send(responseGenerators(removeFields(newUser), StatusCodes.OK, REGISTER.SUCCESS, false));
+      .send(
+        responseGenerators({ email: userData.email, id: newGuide.public_id }, StatusCodes.OK, GUIDE.CREATED, false),
+      );
   } catch (error) {
+    if (error instanceof ValidationError) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, error.message, true));
+    }
+
     // set logs Error function
     logsErrorAndUrl(req, error);
-    if (error instanceof ValidationError) {
-      return res.status(StatusCodes.BAD_REQUEST).send(responseValidation(StatusCodes.BAD_REQUEST, error.message, true));
-    }
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(responseGenerators({}, StatusCodes.INTERNAL_SERVER_ERROR, ERROR.INTERNAL_SERVER_ERROR, true));
-  }
-};
-
-// create change Password
-export const createChangePasswordHandler = async (req: Request, res: Response) => {
-  try {
-
-    await userChangePasswordSchema .validateAsync(req.body);
-    const { newPassword, currentPassword } = req.body
-  
-    const { authorization } = req.headers;
-    const tokenData = await verifyJwt(authorization);
-
-    let findUser = await User.findOne({ email: tokenData.email, public_id: tokenData.userId })
-
-    if (!findUser) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .send(responseValidation(StatusCodes.UNAUTHORIZED, Users.NOT_FOUND, true));
-    }
-
-    const isMatch = await comparePassword(currentPassword, findUser.password);
-
-    if (!isMatch) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .send(responseValidation(StatusCodes.UNAUTHORIZED, LOGIN.INVALID_CRED, true));
-    }
-    // hash the password
-    const hashPass = await hashPassword(newPassword)
-    const changePassword = await User.findOneAndUpdate(
-      { public_id: findUser.public_id },
-      {
-        password: hashPass,
-        update_at: setTimesTamp(),
-      },
-    )
-    createNotification(findUser.public_id ,NOTIFICATION_MESSAGE.RESET_PASSWORD)
-
-    return res.status(StatusCodes.OK).send(responseGenerators(changePassword, StatusCodes.OK, REGISTER.PASSWORD_CHANGE, false));
-
-  } catch (error) {
-    // set logs Error function
-    logsErrorAndUrl(req, error);
-    if (error instanceof ValidationError) {
-      return res.status(StatusCodes.BAD_REQUEST).send(responseValidation(StatusCodes.BAD_REQUEST, error.message, true));
-    }
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(responseGenerators({}, StatusCodes.INTERNAL_SERVER_ERROR, ERROR.INTERNAL_SERVER_ERROR, true));

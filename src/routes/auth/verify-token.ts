@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
 import { setTimesTamp } from '../../common/common-functions';
-import { ERROR, LOGIN, REGISTER } from '../../common/global-constants';
+import { ERROR, LOGIN,REGISTER  } from '../../common/global-constants';
 import { getJwtF } from '../../helpers/jwt.helper';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import User from '../../models/user.model';
