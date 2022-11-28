@@ -114,7 +114,6 @@ export const GUIDE = {
   DELETED_SUCCESSFULLY: 'Guide deleted successfully',
   NO_PERMISSION: 'User dont have permission to delete her self',
   NO_PERMISSION_CREATE: 'User dont have permission to create category',
-
   NO_PERMISSION_DELETE: 'Guide dont have permission to delete her self',
 };
 
@@ -151,39 +150,20 @@ export const CATEGORY = {
   DELETED_SUCCESSFULLY: 'Category deleted successfully',
 };
 
-<<<<<<< HEAD
-export const PRODUCT = {
-  ALREADY_EXIST: 'Sku already exist',
-  CREATED: 'Product created successfully.',
-  UPDATED: 'Product updated successfully.',
-  NOT_FOUND: 'Product not found.',
-  FOUND: 'Product found successfully.',
-  DELETED_SUCCESSFULLY: 'Product deleted successfully',
-  UPLOAD: 'Product image uploaded successfully'
-};
-export const INVENTORY = {
-  CREATED: 'Inventory created successfully.',
-  UPDATED: 'Inventory updated successfully.',
-  NOT_FOUND: 'Inventory not found.',
-  FOUND: 'Inventory found successfully.',
-  DELETED_SUCCESSFULLY: 'Inventory deleted successfully',
-
-};
-export const PLAYLISTS= {
-  CREATED: 'Playlists created successfully.',
-  UPDATED: 'Playlists updated successfully.',
-  NOT_FOUND: 'Playlists not found.',
-  FOUND: 'Playlists found successfully.',
-  DELETED_SUCCESSFULLY: 'Playlists deleted successfully',
-  NO_PERMISSION_CREATE: 'User dont have permission to create playlist',
-
-};
-=======
 export const UPLOAD = {
   UPLOAD: 'file upload successfully',
 }
->>>>>>> feature/guide
-
+export const PLAYLISTS = {
+  NO_PERMISSION: 'User dont have permission to delete playlist',
+  NO_PERMISSION_CREATE: 'User dont have permission to create playlist',
+  NO_PERMISSION_DELETE: 'User dont have permission to delete playlist',
+  CREATED: 'Playlist created successfully.',
+  UPDATED: 'Playlist updated successfully.',
+  NOT_FOUND: 'Playlist not found.',
+  EMAIL_ALREADY_EXIST: 'Email already exist in the system',
+  FOUND: 'Playlist found successfully.',
+  DELETED_SUCCESSFULLY: 'Playlist deleted successfully',
+}
 export const NOTIFICATION = {
   ALREADY_EXIST: 'Notification already exist',
   CREATED: 'Notification  created successfully.',

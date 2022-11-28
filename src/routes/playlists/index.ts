@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticateUser } from '../../middleware';
-//import { deleteHandler } from './delete.playlists';
+import { deleteHandler } from './delete.playlists';
 import { getSingleHandler, getListHandler } from './get.playlists';
 import { createHandler } from './post.playlists';
 import { updateHandler } from './put.playlists';
@@ -26,9 +26,20 @@ PlaylistsRoute.use(authenticateUser);
  *   createPlaylistsResponse:
  *     example:
  *       data:
- *         title: string
- *         quantity: number
- *         min: number
+ *         name: string
+ *         heading: string
+ *         details: string
+ *         tags: array
+ *         category_id: string
+ *         session_count: number
+ *         guide_id: string
+ *         user_id: string
+ *         price: number
+ *         discount_price: number
+ *         total_price: number
+ *         total_playlist_time: string
+ *         thumbnail_url: string
+ *         level: string
  *       status_code: 200
  *       status_message: string
  *       response_error: false
@@ -99,10 +110,9 @@ PlaylistsRoute.use(authenticateUser);
  *         price: number
  *         discount_price: number
  *         total_price: number
- *         total_playlist_time: number
+ *         total_playlist_time: string
  *         thumbnail_url: string
  *         level: string
- *         is_offline: boolean
  * 
  * 
  */
@@ -136,7 +146,7 @@ PlaylistsRoute.use(authenticateUser);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- PlaylistsRoute.post('/', createHandler);
+PlaylistsRoute.post('/', createHandler);
 
 
 /**
@@ -185,7 +195,7 @@ PlaylistsRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  */
 
- PlaylistsRoute.get('/list', getListHandler);
+PlaylistsRoute.get('/list', getListHandler);
 
 /**
  * @swagger
@@ -216,7 +226,7 @@ PlaylistsRoute.use(authenticateUser);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- PlaylistsRoute.get('/:id', getSingleHandler);
+PlaylistsRoute.get('/:id', getSingleHandler);
 
 
 /**
@@ -280,10 +290,9 @@ PlaylistsRoute.use(authenticateUser);
  *         price: number
  *         discount_price: number
  *         total_price: number
- *         total_playlist_time: number
+ *         total_playlist_time: string
  *         thumbnail_url: string
  *         level: string
- *         is_offline: boolean
  * 
  * 
  * 
@@ -336,7 +345,7 @@ PlaylistsRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  *
  */
- PlaylistsRoute.put('/:updateId', updateHandler);
+PlaylistsRoute.put('/:updateId', updateHandler);
 
 /**
  * @swagger
@@ -380,8 +389,8 @@ PlaylistsRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  *
  */
- //PlaylistsRoute.delete('/:deleteId', deleteHandler);
+PlaylistsRoute.delete('/:deleteId', deleteHandler);
 
 
 
-export default  PlaylistsRoute
+export default PlaylistsRoute

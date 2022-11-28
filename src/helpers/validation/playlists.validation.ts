@@ -12,7 +12,7 @@ export const playlistsCreateSchema = Joi.object().keys({
     price: Joi.number(),
     discount_price: Joi.number(),
     total_price: Joi.number(),
-    total_playlist_time:Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/),
+    total_playlist_time:Joi.string(),
     thumbnail_url: Joi.string(),
     level: Joi.string()
 });
@@ -38,7 +38,7 @@ export const playlistsUpdateSchema = Joi.object().keys({
     price: Joi.number(),
     discount_price: Joi.number(),
     total_price: Joi.number(),
-    total_playlist_time:Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/),
+    total_playlist_time:Joi.string(),
     thumbnail_url: Joi.string(),
     level: Joi.string()
 });

@@ -14,7 +14,7 @@ export interface IPlaylistsModel {
   price:number
   discount_price:number
   total_price:number
-  total_playlist_time: Date;
+  total_playlist_time: string;
   thumbnail_url: string;
   level: string;
   is_offline: boolean;
@@ -40,7 +40,7 @@ const PlaylistsSchema: Schema = new Schema({
   price: { type: Number},
   discount_price: { type: Number},
   total_price: { type: Number},
-  total_playlist_time: { type: Date },
+  total_playlist_time: { type: String },
   thumbnail_url: { type: String },
   level: { type: String },
   is_offline: { type: Boolean, default: false },

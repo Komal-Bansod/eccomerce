@@ -1,34 +1,38 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR, INVENTORY, Users, ITokenData, PLAYLISTS, ROLE } from '../../common/global-constants';
+import { ERROR, Users, ITokenData, PLAYLISTS, ROLE } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import { generatePublicId, removeFields, getRoleId, setTimesTamp } from '../../common/common-functions';
 import { playlistsCreateSchema } from '../../helpers/validation/playlists.validation'
 import Playlists from '../../models/playlists.model';
+import Guide from '../../models/guide.model';
 // create inventory here 
 export const createHandler = async (req: Request, res: Response) => {
   try {
-    await playlistsCreateSchema.validateAsync(req.body);
+   await playlistsCreateSchema.validateAsync(req.body);
 
     const { name, heading, details, tags, category_id, session_count, guide_id, user_id, price, discount_price, total_price, total_playlist_time, thumbnail_url, level, } = req.body;
 
-    //   const findGuide = await Guide.findOne({public_id:guide_id, is_deleted:false})
-    //  if(!findGuide){
-    //   return res
-    //   .status(StatusCodes.NOT_FOUND)
-    //   .send(responseGenerators({}, StatusCodes.NOT_FOUND, PLAYLISTS.NOT_FOUND, true));
-    //  }
+    const findGuide = await Guide.findOne({public_id:guide_id})
+  
     const tokenData = (req.headers as any).tokenData as ITokenData;
-    const adminRoleId = await getRoleId('Admin' || 'Guide');
+    const adminRoleId = await getRoleId('Admin');
     if (!adminRoleId) {
       return res
         .status(StatusCodes.NOT_FOUND)
         .send(responseGenerators({}, StatusCodes.NOT_FOUND, ROLE.NOT_FOUND, true));
     }
+  
+    if(!findGuide)
+    if ((tokenData.roleId !== adminRoleId)){
+      return res
+      .status(StatusCodes.FORBIDDEN)
+      .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))
+    }
    
-
-    if (!(tokenData.roleId === adminRoleId)){
+    if(findGuide)
+    if (((tokenData.roleId !== adminRoleId)|| (tokenData.roleId !== findGuide.role_id))){
       return res
       .status(StatusCodes.FORBIDDEN)
       .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))

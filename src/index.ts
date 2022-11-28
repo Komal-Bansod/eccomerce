@@ -19,18 +19,13 @@ import swaggerUi from 'swagger-ui-express';
 import { features } from 'process';
 import CategoryRoute from './routes/category'
 import NotificationRoute from './routes/notification'
-
-import UploadRoute from './routes/upload'
-<<<<<<< HEAD
-import InventoryRoute from './routes/inventory'
 import PlaylistsRoute from './routes/playlists'
-=======
+import UploadRoute from './routes/upload'
 
 import GuideRoute from './routes/guide';
 
 
 
->>>>>>> feature/guide
 dotenv.config();
 
 const app = express();
@@ -426,11 +421,7 @@ app.use('/api/guide', GuideRoute);
 app.use('/api/category', CategoryRoute);
 app.use('/api/notification', NotificationRoute)
 app.use('/api/upload', UploadRoute)
-<<<<<<< HEAD
-app.use('/api/inventory', InventoryRoute)
-app.use('/api/playlists', PlaylistsRoute)
-=======
->>>>>>> feature/guide
+app.use('/api/playlists' , PlaylistsRoute)
 app.use((req: Request, res: Response) => {
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
