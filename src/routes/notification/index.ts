@@ -84,23 +84,23 @@ NotificationRoute.use(authenticateUser);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- NotificationRoute.post('/', createHandler);
+NotificationRoute.post('/', createHandler);
 
 
- /**
- * @swagger
- * definitions:
- *   getNotificationResponse:
- *     example:
- *       data:
- *         public_id: string
- *         user_id: string
- *         message: string
- *         created_at: string
- *       status_code: 200
- *       status_message: string
- *       response_error: false
- */
+/**
+* @swagger
+* definitions:
+*   getNotificationResponse:
+*     example:
+*       data:
+*         public_id: string
+*         user_id: string
+*         message: string
+*         created_at: string
+*       status_code: 200
+*       status_message: string
+*       response_error: false
+*/
 
 
 /**
@@ -149,7 +149,7 @@ NotificationRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  */
 
- NotificationRoute.get('/list', getListHandler);
+NotificationRoute.get('/list', getListHandler);
 
 
 /**
@@ -181,7 +181,7 @@ NotificationRoute.use(authenticateUser);
  *       500:
  *         description: Something went wrong, please try again later.
  */
- NotificationRoute.get('/:id', getSingleHandler);
+NotificationRoute.get('/:id', getSingleHandler);
 
 
 

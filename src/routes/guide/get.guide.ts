@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR, ITokenData,Users, ROLE, GUIDE} from '../../common/global-constants';
+import { ERROR, ITokenData, Users, ROLE, GUIDE } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import { getRoleId, setPagination } from '../../common/common-functions';
-import User from '../../models/user.model';
-import { guideSingleSchema }from '../../helpers/validation/guide.validation'
+
+import { guideSingleSchema } from '../../helpers/validation/guide.validation'
 import Guide from '../../models/guide.model';
 
 // get single user
@@ -15,15 +15,15 @@ export const getSingleHandler = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const findId = await Guide.findOne({public_id:id})
-    if(!findId){
+    const findId = await Guide.findOne({ public_id: id })
+    if (!findId) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, true));
     }
-    
+
     const singleGuide = await Guide.findOne(
-      { public_id: id, is_delete: false},
+      { public_id: id, is_delete: false },
       { _id: 0, __v: 0, password: 0 },
     );
 
@@ -53,14 +53,15 @@ export const getListHandler = async (req: Request, res: Response) => {
       is_deleted: false
     };
 
-    // if (search) {
-    //   where = {
-    //     ...where,
-    //     ...{
-    //       'personal_details.first_name': new RegExp(search.toString(), 'i'),
-    //     },
-    //   };
-    // }
+    if (search) {
+      where = {
+        ...where,
+
+        ...{
+          'personal_details.first_name': new RegExp(search.toString(), 'i'),
+        },
+      };
+    }
 
     // get the Guide here
     const listGuide = await Guide.find(where)
@@ -69,7 +70,7 @@ export const getListHandler = async (req: Request, res: Response) => {
       .limit(pagination.limit)
       .select({ _id: 0, __v: 0 });
 
-    return res.status(StatusCodes.OK).send(responseGenerators(listGuide, StatusCodes.OK, Users.FETCHED, false));
+    return res.status(StatusCodes.OK).send(responseGenerators(listGuide, StatusCodes.OK, GUIDE.FOUND, false));
   } catch (error) {
     // set logs Error function
     logsErrorAndUrl(req, error);

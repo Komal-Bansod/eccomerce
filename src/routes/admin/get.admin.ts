@@ -21,7 +21,7 @@ export const getSingleHandler = async (req: Request, res: Response) => {
     }).select({ password: 0 });
 
     if (!adminData) {
-     return  res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, ADMIN.NOT_FOUND, true));
+      return res.status(StatusCodes.BAD_REQUEST).send(responseGenerators({}, StatusCodes.BAD_REQUEST, ADMIN.NOT_FOUND, true));
     }
 
     return res.status(StatusCodes.OK).send(responseGenerators(adminData, StatusCodes.OK, ADMIN.FOUND, false));

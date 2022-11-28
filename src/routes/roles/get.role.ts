@@ -22,7 +22,7 @@ export const getSingleHandler = async (req: Request, res: Response) => {
 
     // get the role here
     const singleRole = await Role.findOne({ public_id: id });
-    if(!singleRole){
+    if (!singleRole) {
       return res.status(StatusCodes.BAD_REQUEST).send(responseGenerators(null, StatusCodes.BAD_REQUEST, ROLE.NOT_FOUND, true))
     }
 

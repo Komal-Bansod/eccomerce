@@ -26,9 +26,9 @@ export const deleteHandler = async (req: Request, res: Response) => {
       },
     );
 
-   // delete from admin table
+    // delete from admin table
     const adminData = await Admin.findOneAndUpdate(
-      { public_id: userUpdate.is_admin},
+      { public_id: userUpdate.is_admin },
       {
         is_deleted: true,
       },

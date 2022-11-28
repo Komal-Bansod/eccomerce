@@ -13,16 +13,17 @@ export const deleteHandler = async (req: Request, res: Response) => {
     const { deleteId } = req.params;
 
     const tokenData = (req.headers as any).tokenData as ITokenData;
-
+    console.log(tokenData)
     // get Admin role 
     const adminRoleId = await getRoleId('Admin');
     if (tokenData.roleId != adminRoleId)
-    return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.OK, Users.NO_PERMISSION_DELETE, false));
+      return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NO_PERMISSION_DELETE, false));
 
-    const findGuideId = await Guide.findOne({ public_id: deleteId })
-    const findGuideUser = await User.findOne({ guide_id: deleteId })
+    const findGuideId = await Guide.findOne({ public_id: deleteId, is_deleted: false })
+    const findGuideUser = await User.findOne({ guide_id: deleteId, is_deleted: false })
+
     if (!findGuideUser || !findGuideId) {
-      return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.OK, GUIDE.NOT_FOUND, false));
+      return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.BAD_REQUEST, GUIDE.NOT_FOUND, false));
     }
 
     await Guide.findOneAndUpdate(
@@ -30,7 +31,7 @@ export const deleteHandler = async (req: Request, res: Response) => {
       {
         is_deleted: true,
         deleted_at: setTimesTamp(),
-        
+
       },
       { returnOriginal: false },
     );

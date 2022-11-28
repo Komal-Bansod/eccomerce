@@ -1,24 +1,24 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
-import { ERROR,NOTIFICATION} from '../../common/global-constants';
+import { ERROR, NOTIFICATION } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import { setPagination } from '../../common/common-functions';
 import Notification from '../../models/notifications.model';
-import { notificationSingleSchema }from '../../helpers/validation/notification.validation'
+import { notificationSingleSchema } from '../../helpers/validation/notification.validation'
 
 // get single notification
 export const getSingleHandler = async (req: Request, res: Response) => {
   try {
-  await notificationSingleSchema .validateAsync(req.params);
+    await notificationSingleSchema.validateAsync(req.params);
 
-    const {id} = req.params;
+    const { id } = req.params;
 
-    const findId = await Notification.findOne({public_id:id})
-    if(!findId){
+    const findId = await Notification.findOne({ public_id: id })
+    if (!findId) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .send(responseGenerators({}, StatusCodes.BAD_REQUEST,NOTIFICATION.NOT_FOUND, true));
+        .send(responseGenerators({}, StatusCodes.BAD_REQUEST, NOTIFICATION.NOT_FOUND, true));
     }
 
     return res.status(StatusCodes.OK).send(responseGenerators(findId, StatusCodes.OK, NOTIFICATION.FOUND, false));
@@ -38,7 +38,7 @@ export const getSingleHandler = async (req: Request, res: Response) => {
 
 export const getListHandler = async (req: Request, res: Response) => {
   try {
-  
+
 
     const { search } = req.query as any;
 
@@ -46,14 +46,14 @@ export const getListHandler = async (req: Request, res: Response) => {
     const pagination = await setPagination(req.query);
 
     let where = {
-      is_deleted: false 
+      is_deleted: false
     };
 
     if (search) {
       where = {
         ...where,
         ...{
-          user_id : new RegExp(search.toString(), 'i'),
+          user_id: new RegExp(search.toString(), 'i'),
         },
       };
     }

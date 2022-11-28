@@ -11,12 +11,13 @@ export const LOGIN = {
   NOT_ACTIVE_USER: 'Account with given email-id is not active yet.',
 };
 export const NOTIFICATION_MESSAGE = {
-  CREATE_USER: 'New User registered in E-commerce Platform.',
+  CREATE_USER: 'New user registered in e-commerce platform.',
   USER_LOGIN: 'User login in E-commerce',
   RESET_PASSWORD: 'User requested for reset password.',
   FORGOT_PASSWORD: 'User requested for forgot password.',
   UPDATE_PASSWORD: 'User updated password',
-  ADMIN: 'New admin registered in E-commerce Platform'
+  ADMIN: 'New admin registered in e-commerce platform',
+  GUIDE : 'New guide registered in e-commerce platform'
 
 };
 export const REGISTER = {
@@ -111,6 +112,10 @@ export const GUIDE = {
   FOUND: 'Guide found successfully.',
   NOT_DELETED: 'Not deleted.',
   DELETED_SUCCESSFULLY: 'Guide deleted successfully',
+  NO_PERMISSION: 'User dont have permission to delete her self',
+  NO_PERMISSION_CREATE: 'User dont have permission to create category',
+
+  NO_PERMISSION_DELETE: 'Guide dont have permission to delete her self',
 };
 
 export const ADMIN = {

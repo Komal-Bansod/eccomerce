@@ -8,17 +8,17 @@ export const adminLoginSchema = Joi.object().keys({
   mobile: Joi.string().required(),
   date_of_birth: Joi.string().required(),
   gender: Joi.string().valid('Male', 'Female', 'Other').required(),
-  display_name:Joi.string(),
+  display_name: Joi.string(),
   username: Joi.string()
 });
 
 export const adminUpdateSchema = Joi.object().keys({
   updateId: Joi.string().required(),
   first_name: Joi.string().required(),
-  last_name: Joi.string().required(),
-  //mobile: Joi.string().required(),
-  date_of_birth: Joi.string().required(),
-  //gender: Joi.string().valid('Male', 'Female', 'Other').required(),
- // display_name:Joi.string(),
- // username: Joi.string()
+  last_name: Joi.string(),
+  mobile: Joi.string(),
+  date_of_birth: Joi.string(),
+  gender: Joi.string().valid('Male', 'Female', 'Other'),
+  // display_name:Joi.string(),
+  username: Joi.string()
 });
