@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticateUser } from '../../middleware';
-import { deleteHandler } from './delete.playlists';
+//import { deleteHandler } from './delete.playlists';
 import { getSingleHandler, getListHandler } from './get.playlists';
 import { createHandler } from './post.playlists';
 import { updateHandler } from './put.playlists';
@@ -380,7 +380,7 @@ PlaylistsRoute.use(authenticateUser);
  *         description: Something went wrong, please try again later.
  *
  */
- PlaylistsRoute.delete('/:deleteId', deleteHandler);
+ //PlaylistsRoute.delete('/:deleteId', deleteHandler);
 
 
 

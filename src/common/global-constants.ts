@@ -161,6 +161,7 @@ export const PLAYLISTS= {
   NOT_FOUND: 'Playlists not found.',
   FOUND: 'Playlists found successfully.',
   DELETED_SUCCESSFULLY: 'Playlists deleted successfully',
+  NO_PERMISSION_CREATE: 'User dont have permission to create playlist',
 
 };
 

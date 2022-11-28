@@ -17,17 +17,17 @@ export const updateHandler = async (req: Request, res: Response) => {
 
     const { updateId } = req.params;
     const adminRoleId = await getRoleId('Admin' || 'Guide');
-    const findGuide = await Guide.findOne({public_id:guide_id})
-   if(!findGuide){
-    return res
-    .status(StatusCodes.NOT_FOUND)
-    .send(responseGenerators({}, StatusCodes.NOT_FOUND, PLAYLISTS.NOT_FOUND, true));
-   }
-    const tokenData = (req.headers as any).tokenData as ITokenData;
+  //   const findGuide = await Guide.findOne({public_id:guide_id})
+  //  if(!findGuide){
+  //   return res
+  //   .status(StatusCodes.NOT_FOUND)
+  //   .send(responseGenerators({}, StatusCodes.NOT_FOUND, PLAYLISTS.NOT_FOUND, true));
+  //  }
+  //   const tokenData = (req.headers as any).tokenData as ITokenData;
  
-   let updatePlaylists
-    if ((tokenData.roleId === adminRoleId) || (tokenData.roleId === findGuide.public_id)) {
-      updatePlaylists = await Playlists.findOneAndUpdate({ public_id: updateId }, {
+  //  let updatePlaylists
+  //   if ((tokenData.roleId === adminRoleId) || (tokenData.roleId === findGuide.public_id)) {
+    const  updatePlaylists = await Playlists.findOneAndUpdate({ public_id: updateId }, {
         name,
         heading,
         details,
@@ -46,14 +46,14 @@ export const updateHandler = async (req: Request, res: Response) => {
         updated_at: setTimesTamp(),
       }, { returnOriginal: false },)
 
-      if (!updatePlaylists) {
-        return res.status(StatusCodes.BAD_REQUEST).send(responseGenerators(null, StatusCodes.BAD_REQUEST, PLAYLISTS.NOT_FOUND, true))
-      }
-    }
-    if (!updatePlaylists)
-      return res
-        .status(StatusCodes.FORBIDDEN)
-        .send(responseGenerators({}, StatusCodes.FORBIDDEN, Users.NO_PERMISSION_UPDATE, true));
+    //   if (!updatePlaylists) {
+    //     return res.status(StatusCodes.BAD_REQUEST).send(responseGenerators(null, StatusCodes.BAD_REQUEST, PLAYLISTS.NOT_FOUND, true))
+    //   }
+    // }
+    // if (!updatePlaylists)
+    //   return res
+    //     .status(StatusCodes.FORBIDDEN)
+    //     .send(responseGenerators({}, StatusCodes.FORBIDDEN, Users.NO_PERMISSION_UPDATE, true));
 
 
     return res.status(StatusCodes.OK).send(responseGenerators({}, StatusCodes.OK, PLAYLISTS.UPDATED, false));
