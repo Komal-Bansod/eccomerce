@@ -60,7 +60,7 @@ export const updateHandler = async (req: Request, res: Response) => {
       },
       { returnOriginal: false },
     );
-    console.log(updateUser)
+  
     //update user meta data here  
 
     const updateUserMetaData = await UserDetails.findOneAndUpdate({ public_id: findUserDetails.public_id }, {

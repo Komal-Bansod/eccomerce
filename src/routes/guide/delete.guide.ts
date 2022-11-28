@@ -13,7 +13,7 @@ export const deleteHandler = async (req: Request, res: Response) => {
     const { deleteId } = req.params;
 
     const tokenData = (req.headers as any).tokenData as ITokenData;
-    console.log(tokenData)
+   
     // get Admin role 
     const adminRoleId = await getRoleId('Admin');
     if (tokenData.roleId != adminRoleId)
