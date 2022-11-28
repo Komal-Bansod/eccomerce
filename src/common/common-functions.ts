@@ -41,15 +41,7 @@ export const generatePublicId = () => {
   return nanoid();
 };
 
-/**
- * Generate product sku
- * @param string to be generate dynamic
- * @returns 5 characters of nano id
- */
-export const generateSKU = (string) => {
-  const nanoid = customAlphabet(string, 5)
-  return nanoid()
-}
+
 
 export const getIp = (req) => {
   return req.split(':').pop();

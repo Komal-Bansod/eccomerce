@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
 import { logsErrorAndUrl, responseGenerators } from '../../lib';
-import { ERROR, PRODUCT } from '../../common/global-constants';
+import { ERROR, UPLOAD} from '../../common/global-constants';
 import { Router } from 'express';
 import multer from 'multer'
 
@@ -77,7 +77,7 @@ UploadRoute.post("/profile", upload.array("images", 4), (req, res) => {
       }
     }
 
-    return res.status(StatusCodes.OK).send(responseGenerators(arr, StatusCodes.OK, PRODUCT.UPLOAD, false));
+    return res.status(StatusCodes.OK).send(responseGenerators(arr, StatusCodes.OK, UPLOAD.UPLOAD, false));
   } catch (error) {
     if (error instanceof ValidationError) {
       return res

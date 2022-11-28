@@ -19,16 +19,24 @@ import swaggerUi from 'swagger-ui-express';
 import { features } from 'process';
 import CategoryRoute from './routes/category'
 import NotificationRoute from './routes/notification'
-import ProductRoute from './routes/product'
+
 import UploadRoute from './routes/upload'
+<<<<<<< HEAD
 import InventoryRoute from './routes/inventory'
 import PlaylistsRoute from './routes/playlists'
+=======
+
+import GuideRoute from './routes/guide';
+
+
+
+>>>>>>> feature/guide
 dotenv.config();
 
 const app = express();
 
 const server = new http.Server(app);
-app.use(cors());
+app.use(cors({ origin: '*' }));
 // const io = new Server(server,{cors: {origin: "*"}});
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -351,7 +359,6 @@ app.post('/api/forgot-password', forgotPassword)
  */
 app.post('/api/verify-token', verifyToken)
 
-
 /**
  * @swagger
  * definitions:
@@ -415,12 +422,15 @@ app.post('/api/update-password', updatePassword)
 app.use('/api/role', RoleRoute);
 app.use('/api/admin', AdminRoute);
 app.use('/api/user', UserRoute);
+app.use('/api/guide', GuideRoute);
 app.use('/api/category', CategoryRoute);
 app.use('/api/notification', NotificationRoute)
-app.use('/api/product', ProductRoute)
 app.use('/api/upload', UploadRoute)
+<<<<<<< HEAD
 app.use('/api/inventory', InventoryRoute)
 app.use('/api/playlists', PlaylistsRoute)
+=======
+>>>>>>> feature/guide
 app.use((req: Request, res: Response) => {
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)

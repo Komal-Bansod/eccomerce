@@ -7,7 +7,7 @@ import { updateHandler } from './put.role';
 
 const RoleRoute = Router();
 
-RoleRoute.use(authenticateUser);
+//RoleRoute.use(authenticateUser);
 
 /**
  * @swagger

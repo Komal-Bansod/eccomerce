@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
 import { setTimesTamp, createNotification } from '../../common/common-functions';
-import { ERROR, FORGOT_PASSWORD, LOGIN, NOTIFICATION_MESSAGE, REGISTER } from '../../common/global-constants';
+import { ERROR, FORGOT_PASSWORD, LOGIN, NOTIFICATION_MESSAGE} from '../../common/global-constants';
 import { getJwtF } from '../../helpers/jwt.helper';
 import { expiredValidSession } from '../../helpers/session.helper';
 import { forgotPasswordSchema } from '../../helpers/validation/forgot-password.validation';

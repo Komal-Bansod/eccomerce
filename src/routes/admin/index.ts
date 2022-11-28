@@ -7,7 +7,7 @@ import { updateHandler } from './put.admin';
 
 const AdminRoute = Router();
 
- AdminRoute.use(authenticateUser);
+AdminRoute.use(authenticateUser);
 
 /**
  * @swagger
@@ -33,6 +33,7 @@ const AdminRoute = Router();
  *         date_of_birth: string
  *         mobile: string
  *         gender: string
+ *         username: string
  *       status_code: 200
  *       status_message: string
  *       response_error: false
@@ -52,6 +53,7 @@ const AdminRoute = Router();
  *         - date_of_birth
  *         - mobile
  *         - gender
+ * 
  *       properties:
  *         email:
  *           type: string
@@ -73,7 +75,10 @@ const AdminRoute = Router();
  *           description: mobile
  *         gender:
  *           type: string
- *           description: gender
+ *           description: 
+ *         username:
+ *           type: string
+ *           description: username
  *       example:
  *         email: string
  *         password: string
@@ -82,6 +87,7 @@ const AdminRoute = Router();
  *         date_of_birth: string
  *         mobile: string
  *         gender: string
+ *         username: string
  *
  */
 
@@ -142,7 +148,7 @@ AdminRoute.post('/', createHandler);
  *         description: Something went wrong, please try again later.
  */
 
- AdminRoute.get('/list', getListHandler);
+AdminRoute.get('/list', getListHandler);
 
 /**
  * @swagger
@@ -228,13 +234,16 @@ AdminRoute.get('/:id', getSingleHandler);
  *         gender:
  *           type: string
  *           description: gender
+ *         username:
+ *           type: string
+ *           description: username
  *       example:
  *         first_name: string
  *         last_name: string
  *         date_of_birth: string
  *         mobile: string
  *         gender: string
- * 
+ *         username: string
  */
 /**
 /**

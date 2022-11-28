@@ -34,15 +34,14 @@ export const userSingleSchema = Joi.object().keys({
   id: Joi.string().required(),
 });
 
-// export const userListSchema = Joi.object().keys({
-//   search: Joi.string().optional(),
-// });
 
 export const userDeleteSchema = Joi.object().keys({
   deleteId: Joi.string().required(),
 });
 
 export const userUpdateSchema = Joi.object().keys({  
+  guide_id : Joi.string(),
+  admin_id: Joi.string(),
   display_name: Joi.string().optional(),
   first_name: Joi.string().optional(),
   last_name: Joi.string().optional(),
