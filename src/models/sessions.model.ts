@@ -7,9 +7,9 @@ export interface ISessionsModel {
   video_url: [];
   thumbnail_url: string;
   price:number
-  session_start_date_time:number
+  session_start_date_time: string
   discount_price:number
-  total_price: Date;
+  total_price: number;
   is_offline: boolean;
   room_id: string
   session_host: string
@@ -34,7 +34,7 @@ const SessionsSchema: Schema = new Schema({
   session_start_date_time: { type: String },
   discount_price: { type: Number},
   total_price: { type: Number},
-  room_id: { type: Date },
+  room_id: { type: String },
   session_host: { type: String },
   is_offline: { type: Boolean, default: false },
   is_deleted: { type: Boolean, default: false },
@@ -48,6 +48,6 @@ const SessionsSchema: Schema = new Schema({
   deleted_at: { type: String },
 });
 
-const Sessions = mongoose.model<ISessionsModel>('sessions', SessionsSchema);
+const Sessions = mongoose.model<ISessionsModel>('sessionss', SessionsSchema);
 
 export default Sessions;

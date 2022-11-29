@@ -21,7 +21,7 @@ import CategoryRoute from './routes/category'
 import NotificationRoute from './routes/notification'
 import PlaylistsRoute from './routes/playlists'
 import UploadRoute from './routes/upload'
-
+import SessionsRoute from './routes/sessions'
 import GuideRoute from './routes/guide';
 
 
@@ -422,6 +422,7 @@ app.use('/api/category', CategoryRoute);
 app.use('/api/notification', NotificationRoute)
 app.use('/api/upload', UploadRoute)
 app.use('/api/playlists' , PlaylistsRoute)
+app.use('/api/sessions' , SessionsRoute)
 app.use((req: Request, res: Response) => {
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)

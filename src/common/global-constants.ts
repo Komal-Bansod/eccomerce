@@ -149,7 +149,18 @@ export const CATEGORY = {
   FOUND: 'Category found successfully.',
   DELETED_SUCCESSFULLY: 'Category deleted successfully',
 };
-
+export const SESSIONS= {
+  ALREADY_EXIST: 'Session already exist',
+  CREATED: 'Session created successfully.',
+  UPDATED: 'Session updated successfully.',
+  NOT_FOUND: 'Session not found.',
+  FOUND: 'Session found successfully.',
+  DELETED_SUCCESSFULLY: 'Session deleted successfully',
+  NO_PERMISSION: 'User dont have permission to delete session',
+  NO_PERMISSION_CREATE: 'User dont have permission to create session',
+  NO_PERMISSION_DELETE: 'User dont have permission to delete session',
+  NO_PERMISSION_UPDATE: 'User dont have permission to update session',
+}
 export const UPLOAD = {
   UPLOAD: 'file upload successfully',
 }
