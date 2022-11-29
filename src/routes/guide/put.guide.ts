@@ -13,7 +13,7 @@ export const updateHandler = async (req: Request, res: Response) => {
   try {
     await guideUpdateSchema.validateAsync({ ...req.body, ...req.params });
 
-    const { personal_details, contact_details, company_details, job_history, other_certificates, username, email, mobile, display_name, gender, date_of_birth, first_name, last_name, address, profile_pic } = req.body;
+    const { personal_details, contact_details, company_details, job_history, other_certificates, username, mobile, display_name, gender, date_of_birth, first_name, last_name, address, profile_pic } = req.body;
 
     const { updateId } = req.params;
 

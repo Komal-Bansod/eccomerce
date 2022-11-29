@@ -5,39 +5,39 @@ export const guideCreateSchema = Joi.object().keys({
         first_name: Joi.string().required(),
         last_name: Joi.string().required(),
         date_of_birth: Joi.date().required(),
-        blood_group: Joi.string().required(),
+        blood_group: Joi.string(),
         gender: Joi.string().valid('Male', 'Female', 'Other').required(),
-        profile_pic: Joi.string().required(),
+        profile_pic: Joi.string(),
         docs: Joi.array()
     }),
     contact_details: Joi.object({
         phone: Joi.string().pattern(/^[0-9]+$/),
         employee_email_personal: Joi.string().email().required(),
-        employee_email_company: Joi.string().email().required(),
-        mobile: Joi.string().length(10).pattern(/^[0-9]+$/),
+        employee_email_company: Joi.string().email(),
+        mobile: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
         emergency_contact_one: Joi.object({
-            name: Joi.string().required(),
-            relation: Joi.string().required(),
+            name: Joi.string(),
+            relation: Joi.string(),
             number: Joi.string().length(10).pattern(/^[0-9]+$/)
         }),
     }),
     address: Joi.object({
-        current_address: Joi.string().required(),
-        permanent_address: Joi.string().required(),
-        city: Joi.string().required(),
-        state: Joi.string().required(),
-        area: Joi.string().required(),
-        country: Joi.string().required(),
+        current_address: Joi.string(),
+        permanent_address: Joi.string(),
+        city: Joi.string(),
+        state: Joi.string(),
+        area: Joi.string(),
+        country: Joi.string(),
     }),
     company_details: Joi.object({
         date_of_join: Joi.date(),
-        hiring_source: Joi.string().required(),
+        hiring_source: Joi.string(),
         slack_username: Joi.string(),
         designation: Joi.string().required(),
-        department: Joi.string().required(),
+        department: Joi.string(),
         current_salary: Joi.string(),
-        hourly_rate: Joi.string().required(),
-        skills: Joi.string().required(),
+        hourly_rate: Joi.string(),
+        skills: Joi.array(),
         is_remote: Joi.boolean(),
     }),
     job_history: Joi.object({
@@ -45,13 +45,33 @@ export const guideCreateSchema = Joi.object().keys({
             Joi.object({
                 designation: Joi.string(),
                 company: Joi.object({
+                    name: Joi.string(),
                     address: Joi.string(),
-                    company: Joi.string(),
                     website: Joi.string()
                 })
             })
         ),
-        education: Joi.string().required()
+        education:  Joi.object({
+            master_degree: Joi.object({
+                name: Joi.string(),
+                institute: Joi.string(),
+                university: Joi.string(),
+                city: Joi.string(),
+            }),
+            bachelor_degree: Joi.object({
+                name: Joi.string(),
+                institute: Joi.string(),
+                university: Joi.string(),
+                city: Joi.string(),
+            }).required(),
+            school: Joi.object({
+                name: Joi.string(),
+                institute: Joi.string(),
+                board: Joi.string(),
+                city: Joi.string(),
+            }),
+
+        })
     }),
     other_certificates: Joi.array().items(
         Joi.object({
@@ -77,42 +97,41 @@ export const guideDeleteSchema = Joi.object().keys({
 
   export const guideUpdateSchema = Joi.object().keys({
     personal_details: Joi.object({
-        first_name: Joi.string().required(),
-        last_name: Joi.string().required(),
-        date_of_birth: Joi.date().required(),
-        blood_group: Joi.string().required(),
-        gender: Joi.string().valid('Male', 'Female', 'Other').required(),
-        profile_pic: Joi.string().required(),
+        first_name: Joi.string(),
+        last_name: Joi.string(),
+        date_of_birth: Joi.date(),
+        blood_group: Joi.string(),
+        gender: Joi.string().valid('Male', 'Female', 'Other'),
+        profile_pic: Joi.string(),
         docs: Joi.array()
     }),
     contact_details: Joi.object({
         phone: Joi.string().pattern(/^[0-9]+$/),
-        employee_email_personal: Joi.string().email().required(),
-        employee_email_company: Joi.string().email().required(),
+        employee_email_personal: Joi.string().email(),
         mobile: Joi.string().length(10).pattern(/^[0-9]+$/),
         emergency_contact_one: Joi.object({
-            name: Joi.string().required(),
-            relation: Joi.string().required(),
+            name: Joi.string(),
+            relation: Joi.string(),
             number: Joi.string().length(10).pattern(/^[0-9]+$/)
         }),
     }),
     address: Joi.object({
-        current_address: Joi.string().required(),
-        permanent_address: Joi.string().required(),
-        city: Joi.string().required(),
-        state: Joi.string().required(),
-        area: Joi.string().required(),
-        country: Joi.string().required(),
+        current_address: Joi.string(),
+        permanent_address: Joi.string(),
+        city: Joi.string(),
+        state: Joi.string(),
+        area: Joi.string(),
+        country: Joi.string(),
     }),
     company_details: Joi.object({
         date_of_join: Joi.date(),
-        hiring_source: Joi.string().required(),
+        hiring_source: Joi.string(),
         slack_username: Joi.string(),
-        designation: Joi.string().required(),
-        department: Joi.string().required(),
+        designation: Joi.string(),
+        department: Joi.string(),
         current_salary: Joi.string(),
-        hourly_rate: Joi.string().required(),
-        skills: Joi.string().required(),
+        hourly_rate: Joi.string(),
+        skills: Joi.array(),
         is_remote: Joi.boolean(),
     }),
     job_history: Joi.object({
@@ -126,7 +145,7 @@ export const guideDeleteSchema = Joi.object().keys({
                 })
             })
         ),
-        education: Joi.string().required()
+        education: Joi.string()
     }),
     other_certificates: Joi.array().items(
         Joi.object({
@@ -141,7 +160,6 @@ export const guideDeleteSchema = Joi.object().keys({
     last_name: Joi.string().optional(),
     gender: Joi.string().valid('Male', 'Female', 'Other').optional(),
     mobile: Joi.string().optional(),
-    email: Joi.string().email().optional(),
     username: Joi.string().optional(),
     profile_pic: Joi.string().optional(),
     date_of_birth: Joi.date().optional(),

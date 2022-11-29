@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
-import { ERROR, GUIDE, ITokenData, ROLE, Users } from '../../common/global-constants';
+import { ERROR, GUIDE, ITokenData } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators } from '../../lib';
 import { getRoleId, setTimesTamp } from '../../common/common-functions';
 import { guideDeleteSchema } from '../../helpers/validation/guide.validation';
@@ -13,7 +13,7 @@ export const deleteHandler = async (req: Request, res: Response) => {
     const { deleteId } = req.params;
 
     const tokenData = (req.headers as any).tokenData as ITokenData;
-   
+
     // get Admin role 
     const adminRoleId = await getRoleId('Admin');
     if (tokenData.roleId != adminRoleId)

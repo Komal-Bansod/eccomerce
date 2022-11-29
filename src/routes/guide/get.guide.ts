@@ -4,7 +4,6 @@ import { ValidationError } from 'joi';
 import { ERROR, ITokenData, Users, ROLE, GUIDE } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, responseValidation } from '../../lib';
 import { getRoleId, setPagination } from '../../common/common-functions';
-
 import { guideSingleSchema } from '../../helpers/validation/guide.validation'
 import Guide from '../../models/guide.model';
 

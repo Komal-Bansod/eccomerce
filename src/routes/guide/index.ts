@@ -26,37 +26,35 @@ const GuideRoute = Router();
  *       required:
  *         - personal_details
  *         - contact_details
- *         - address
- *         - other_certificates
  *       properties:
  *         personal_details:
- *           type: string
- *           description: personal_details
+ *           type: object
+ *           description: personal_details:{first_name, last_name, date_of_birth,gender is required}
  *         contact_details:
  *           type: string
- *           description: contact_details
+ *           description:  contact_details:{employee_email_company , mobile is required}
  *         address:
- *           type: string
+ *           type: object
  *           description: address
  *         company_details:
- *           type: string
+ *           type: object
  *           description: company_details
  *         job_history:
- *           type: string
- *           description: job_history
+ *           type: object
+ *           description: two field past_jobs [], education{master_degree, bachelor_degree, school, },
  *         other_certificates:
- *           type: string
+ *           type: array of object
  *           description: other_certificates
  *         password:
  *           type: string
- *           description: password
+ *           description: Pass
  *       example:
  *         personal_details: object
  *         contact_details: object
  *         address: object
  *         company_details: object
  *         job_history: object
- *         other_certificates: object
+ *         other_certificates: array of object
  *         password: string
  * 
  */
@@ -80,7 +78,7 @@ const GuideRoute = Router();
  *         address: string
  *         company_details: string
  *         job_history: string
- *         other_certificates: object
+ *         other_certificates: array of object
  *         created_by: string
  *         updated_by: string
  *         deleted_by: string
@@ -124,7 +122,6 @@ const GuideRoute = Router();
  *
  */
 
-
 GuideRoute.post('/', createHandler); // Create Guide 
 GuideRoute.use(authenticateUser);
 
@@ -140,7 +137,7 @@ GuideRoute.use(authenticateUser);
  *         address: object
  *         company_details: object
  *         job_history: object
- *         other_certificates: object
+ *         other_certificates: array of object
  *         created_by: string
  *         updated_by: string
  *         deleted_by: string
@@ -265,11 +262,9 @@ GuideRoute.get('/:id', getSingleHandler);
  *         job_history: object
  *         other_certificates: object
  *         first_name: string
- *         last_name: string
- *         email: string
+ *         last_name: string 
+ *         username: string
  *         mobile: string
- *         password: string
- *         role_id: string
  * 
  * 
  */

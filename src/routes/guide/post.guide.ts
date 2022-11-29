@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { ValidationError } from 'joi';
 import { ERROR, ROLE, NOTIFICATION_MESSAGE, GUIDE, Users } from '../../common/global-constants';
 import { logsErrorAndUrl, responseGenerators, } from '../../lib';
-import { generatePublicId, getRoleId, hashPassword, setTimesTamp, comparePassword, createNotification } from '../../common/common-functions';
+import { generatePublicId, getRoleId, hashPassword, setTimesTamp, createNotification } from '../../common/common-functions';
 import User from '../../models/user.model';
 import { guideCreateSchema } from '../../helpers/validation/guide.validation';
 import UserDetails from '../../models/user-details.model';
@@ -29,9 +29,9 @@ export const createHandler = async (req: Request, res: Response) => {
     if (password) {
       var hashPass = await hashPassword(password);
     }
+    const isEmailExistPersonal = await User.findOne({ email: contact_details.employee_email_personal, })
 
-    const isEmailExist = await User.findOne({ email: contact_details.employee_email_personal, })
-    if (isEmailExist) {
+    if (isEmailExistPersonal) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .send(responseGenerators({}, StatusCodes.BAD_REQUEST, Users.EMAIL_ALREADY_EXIST, true));
