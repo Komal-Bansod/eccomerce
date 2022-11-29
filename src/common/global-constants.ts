@@ -185,10 +185,8 @@ export interface ITokenData {
   last_name?: string;
   role?: string;
   roleId?: string;
-  operatorId?: string;
   userId: string;
-  operator_by?: string;
-  guide_id?:string
+  guideId?:string
 }
 export interface TokenData {
   email: string;

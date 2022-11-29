@@ -59,7 +59,7 @@ export const loginHandler = async (req: Request, res: Response) => {
       first_name: user[0].first_name,
       last_name: user[0].last_name,
       userId: user[0].public_id,
-      guide_id: user[0].guide_id,
+      guideId: user[0].guide_id,
       role: user[0].role.name,
       roleId: user[0].role.public_id,
 

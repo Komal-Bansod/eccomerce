@@ -41,7 +41,7 @@ export const updateHandler = async (req: Request, res: Response) => {
           .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_UPDATE, true))
       }
     if (findGuide)
-      if (!((tokenData.roleId === adminRoleId) || (tokenData.guide_id === findGuide.public_id))) {
+      if (!((tokenData.roleId === adminRoleId) || (tokenData.guideId === findGuide.public_id))) {
         return res
           .status(StatusCodes.FORBIDDEN)
           .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_UPDATE, true))
