@@ -77,7 +77,7 @@ export const createHandler = async (req: Request, res: Response) => {
       public_id: generatePublicId(),
       created_at: setTimesTamp(),
     });
-    createNotification(userData.public_id, NOTIFICATION_MESSAGE.GUIDE)
+    createNotification(newGuide.public_id, NOTIFICATION_MESSAGE.GUIDE)
 
 
     return res

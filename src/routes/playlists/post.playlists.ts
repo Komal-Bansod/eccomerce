@@ -10,12 +10,12 @@ import Guide from '../../models/guide.model';
 // create inventory here 
 export const createHandler = async (req: Request, res: Response) => {
   try {
-   await playlistsCreateSchema.validateAsync(req.body);
+    await playlistsCreateSchema.validateAsync(req.body);
 
     const { name, heading, details, tags, category_id, session_count, guide_id, user_id, price, discount_price, total_price, total_playlist_time, thumbnail_url, level, } = req.body;
 
-    const findGuide = await Guide.findOne({public_id:guide_id})
-  
+    const findGuide = await Guide.findOne({ public_id: guide_id })
+
     const tokenData = (req.headers as any).tokenData as ITokenData;
     const adminRoleId = await getRoleId('Admin');
     if (!adminRoleId) {
@@ -23,40 +23,40 @@ export const createHandler = async (req: Request, res: Response) => {
         .status(StatusCodes.NOT_FOUND)
         .send(responseGenerators({}, StatusCodes.NOT_FOUND, ROLE.NOT_FOUND, true));
     }
-  
-    if(!findGuide)
-    if ((tokenData.roleId !== adminRoleId)){
-      return res
-      .status(StatusCodes.FORBIDDEN)
-      .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))
-    }
-   
-    if(findGuide)
-    if (((tokenData.roleId !== adminRoleId)|| (tokenData.roleId !== findGuide.role_id))){
-      return res
-      .status(StatusCodes.FORBIDDEN)
-      .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))
-    }
-   
-   const createPlaylist =  await Playlists.create({
-        public_id: generatePublicId(),
-        name,
-        heading,
-        details,
-        tags,
-        category_id,
-        session_count,
-        guide_id,
-        user_id,
-        price,
-        discount_price,
-        total_price,
-        total_playlist_time,
-        thumbnail_url,
-        level,
-        created_by: '',
-        created_at: setTimesTamp(),
-      });
+
+    if (!findGuide)
+      if ((tokenData.roleId !== adminRoleId) ) {
+        return res
+          .status(StatusCodes.FORBIDDEN)
+          .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))
+      }
+
+    if (findGuide)
+      if (!((tokenData.roleId === adminRoleId) || (tokenData.guide_id === findGuide.public_id))) {
+        return res
+          .status(StatusCodes.FORBIDDEN)
+          .send(responseGenerators({}, StatusCodes.FORBIDDEN, PLAYLISTS.NO_PERMISSION_CREATE, true))
+      }
+
+    const createPlaylist = await Playlists.create({
+      public_id: generatePublicId(),
+      name,
+      heading,
+      details,
+      tags,
+      category_id,
+      session_count,
+      guide_id,
+      user_id,
+      price,
+      discount_price,
+      total_price,
+      total_playlist_time,
+      thumbnail_url,
+      level,
+      created_by: '',
+      created_at: setTimesTamp(),
+    });
 
 
     return res

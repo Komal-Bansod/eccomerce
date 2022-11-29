@@ -5,16 +5,17 @@ export const playlistsCreateSchema = Joi.object().keys({
     heading: Joi.string(),
     details: Joi.string(),
     tags: Joi.array(),
-    category_id: Joi.string(),
+    category_id: Joi.string().required(),
     session_count: Joi.number(),
     guide_id: Joi.string(),
-    user_id: Joi.string(),
+    user_id: Joi.string().required(),
     price: Joi.number(),
     discount_price: Joi.number(),
     total_price: Joi.number(),
-    total_playlist_time:Joi.string(),
+    total_playlist_time:Joi.string().regex(/^([0-9]{2})\:([0-9]{2})$/),
     thumbnail_url: Joi.string(),
-    level: Joi.string()
+    level: Joi.string(),
+    is_offline:Joi.boolean()
 });
 
 export const playlistsSingleSchema = Joi.object().keys({
@@ -40,5 +41,6 @@ export const playlistsUpdateSchema = Joi.object().keys({
     total_price: Joi.number(),
     total_playlist_time:Joi.string(),
     thumbnail_url: Joi.string(),
-    level: Joi.string()
+    level: Joi.string(),
+    is_offline: Joi.boolean()
 });

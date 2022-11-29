@@ -157,6 +157,7 @@ export const PLAYLISTS = {
   NO_PERMISSION: 'User dont have permission to delete playlist',
   NO_PERMISSION_CREATE: 'User dont have permission to create playlist',
   NO_PERMISSION_DELETE: 'User dont have permission to delete playlist',
+  NO_PERMISSION_UPDATE: 'User dont have permission to update playlist',
   CREATED: 'Playlist created successfully.',
   UPDATED: 'Playlist updated successfully.',
   NOT_FOUND: 'Playlist not found.',
@@ -187,6 +188,7 @@ export interface ITokenData {
   operatorId?: string;
   userId: string;
   operator_by?: string;
+  guide_id?:string
 }
 export interface TokenData {
   email: string;

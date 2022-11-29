@@ -37,9 +37,10 @@ PlaylistsRoute.use(authenticateUser);
  *         price: number
  *         discount_price: number
  *         total_price: number
- *         total_playlist_time: string
+ *         total_playlist_time: hh:mm
  *         thumbnail_url: string
  *         level: string
+ *         is_offline: boolean 
  *       status_code: 200
  *       status_message: string
  *       response_error: false
@@ -53,8 +54,8 @@ PlaylistsRoute.use(authenticateUser);
  *       type: object
  *       required:
  *         - name
- *         - guide_id
- *         - level
+ *         - user_id
+ *         - category_id
  *       properties:
  *         name:
  *           type: string
@@ -90,14 +91,17 @@ PlaylistsRoute.use(authenticateUser);
  *           type: number
  *           description: total_price
  *         total_playlist_time:
- *           type: number
- *           description: session_count
+ *           type: string
+ *           description: hh:mm
  *         thumbnail_url:
  *           type: string
  *           description: thumbnail_url
  *         level:
  *           type: string
  *           description: level
+ *         is_offline:
+ *           type: boolean
+ *           description: is_offline
  *       example:
  *         name: string
  *         heading: string
@@ -110,9 +114,10 @@ PlaylistsRoute.use(authenticateUser);
  *         price: number
  *         discount_price: number
  *         total_price: number
- *         total_playlist_time: string
+ *         total_playlist_time: hh:mm
  *         thumbnail_url: string
  *         level: string
+ *         is_offline: boolean
  * 
  * 
  */
@@ -270,14 +275,17 @@ PlaylistsRoute.get('/:id', getSingleHandler);
  *           type: number
  *           description: total_price
  *         total_playlist_time:
- *           type: number
- *           description: session_count
+ *           type: string
+ *           description: playlist time
  *         thumbnail_url:
  *           type: string
  *           description: thumbnail_url
  *         level:
  *           type: string
  *           description: level
+ *         is_offline:
+ *           type: boolean
+ *           description: is_offline
  *       example:
  *         name: string
  *         heading: string
@@ -290,11 +298,10 @@ PlaylistsRoute.get('/:id', getSingleHandler);
  *         price: number
  *         discount_price: number
  *         total_price: number
- *         total_playlist_time: string
+ *         total_playlist_time: hh:mm
  *         thumbnail_url: string
  *         level: string
- * 
- * 
+ *         is_offline: boolean
  * 
  * 
  */
@@ -327,14 +334,14 @@ PlaylistsRoute.get('/:id', getSingleHandler);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/updatePlaylist'
+ *             $ref: '#/components/schemas/updatePlaylists'
  *     responses:
  *       200:
  *         description: The playlist updated
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/createPlaylistResponse'
+ *               $ref: '#/definitions/updatePlaylistsResponse'
  *       404:
  *         description: Playlist can not be found
  *         content:
